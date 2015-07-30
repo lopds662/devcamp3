@@ -2,11 +2,13 @@ package com.example.androidbp.activity;
 
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,8 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final String EXTRA_MESSAGE = "ASFM PASMF";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,11 +90,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void sendMessage(){
-        Context context = getApplicationContext();
-        CharSequence text = "Hello";
-        int dulation = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context,text,dulation);
-        toast.show();
+    public void sendMessage(View view){
+        Intent intent = new Intent(this, AddAchivement.class);
+        String message = "String Testing";
+        intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
+
     }
 }
