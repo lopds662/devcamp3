@@ -14,18 +14,18 @@ public class AddAchivement extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Get message from the intent
-        Intent intent = getIntent();
-        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-
-        // create the text view
-        TextView textView = new TextView(this);
-        textView.setTextSize(40);
-        textView.setText(message);
-
-        // Set the text view as the activity layout
-        setContentView(textView);
+        setContentView(R.layout.activity_add_achivement);
+//        // Get message from the intent
+//        Intent intent = getIntent();
+//        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+//
+//        // create the text view
+//        TextView textView = new TextView(this);
+//        textView.setTextSize(40);
+//        textView.setText(message);
+//
+//        // Set the text view as the activity layout
+//        setContentView(textView);
     }
 
     @Override
@@ -48,5 +48,10 @@ public class AddAchivement extends ActionBarActivity {
 //        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void cameraOn(){
+        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+        startActivity(intent);
     }
 }
