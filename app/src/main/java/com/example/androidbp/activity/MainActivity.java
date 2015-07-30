@@ -38,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
+
 //        getSupportFragmentManager().findFragmentById()
 
         //Call api from github
@@ -85,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.com_ach) {
             return true;
         }
 
