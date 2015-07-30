@@ -27,8 +27,6 @@ import retrofit.client.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    //@Bind(R.id.fragmentMain) public com.google.android.gms.maps.MapFragment mapFragment;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
         //Inject view id to above properties
         ButterKnife.bind(this);
 
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.frameLayoutFragment, new MapFragment());
+        ft.commit();
 
 //        getSupportFragmentManager().findFragmentById()
 
