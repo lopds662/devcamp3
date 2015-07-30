@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.androidbp.R;
@@ -50,8 +51,10 @@ public class AddAchivement extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void cameraOn(){
+    public void cameraOn(View view){
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         startActivity(intent);
+//        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+//        startActivityForResult(intent, 0);
     }
 }
