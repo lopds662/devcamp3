@@ -1,12 +1,14 @@
 package com.example.androidbp.activity;
 
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.androidbp.R;
 import com.example.androidbp.api.Api;
@@ -42,24 +44,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_launcher);
 
-//        getSupportFragmentManager().findFragmentById()
-
-        //Call api from github
-//        HttpManager.ApiFor(Api.class).listRepos("stackle", new Callback<List<Repo>>() {
-//            @Override
-//            public void success(List<Repo> repos, Response response) {
-//                Log.d("GGGG", String.valueOf(repos));
-//                BusManager.post(new GithubRepoLoaded(repos));
-//            }
-//
-//            @Override
-//            public void failure(RetrofitError error) {
-//                Log.e("GGGG", String.valueOf(error));
-//            }
-//        });
-
-
-
     }
 
     @Override
@@ -93,11 +77,20 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
+
         return super.onOptionsItemSelected(item);
     }
 
     @Subscribe
     public void HandleCountButtonClicked(GithubRepoLoaded e) {
 
+    }
+
+    public void sendMessage(){
+        Context context = getApplicationContext();
+        CharSequence text = "Hello";
+        int dulation = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context,text,dulation);
+        toast.show();
     }
 }
