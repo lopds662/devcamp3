@@ -1,5 +1,6 @@
 package com.example.androidbp.activity;
 
+import android.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import com.example.androidbp.api.model.Repo;
 import com.example.androidbp.event.GithubRepoLoaded;
 import com.example.androidbp.manager.BusManager;
 import com.example.androidbp.manager.HttpManager;
+import com.google.android.gms.maps.MapFragment;
 import com.squareup.otto.Subscribe;
 
 import java.util.List;
@@ -25,7 +27,7 @@ import retrofit.client.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Bind(R.id.repo_list) public TextView repoListText;
+    //@Bind(R.id.fragmentMain) public com.google.android.gms.maps.MapFragment mapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,19 +37,24 @@ public class MainActivity extends AppCompatActivity {
         //Inject view id to above properties
         ButterKnife.bind(this);
 
-        //Call api from github
-        HttpManager.ApiFor(Api.class).listRepos("stackle", new Callback<List<Repo>>() {
-            @Override
-            public void success(List<Repo> repos, Response response) {
-                Log.d("GGGG", String.valueOf(repos));
-                BusManager.post(new GithubRepoLoaded(repos));
-            }
 
-            @Override
-            public void failure(RetrofitError error) {
-                Log.e("GGGG", String.valueOf(error));
-            }
-        });
+//        getSupportFragmentManager().findFragmentById()
+
+        //Call api from github
+//        HttpManager.ApiFor(Api.class).listRepos("stackle", new Callback<List<Repo>>() {
+//            @Override
+//            public void success(List<Repo> repos, Response response) {
+//                Log.d("GGGG", String.valueOf(repos));
+//                BusManager.post(new GithubRepoLoaded(repos));
+//            }
+//
+//            @Override
+//            public void failure(RetrofitError error) {
+//                Log.e("GGGG", String.valueOf(error));
+//            }
+//        });
+
+
 
     }
 
@@ -87,6 +94,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Subscribe
     public void HandleCountButtonClicked(GithubRepoLoaded e) {
-        repoListText.setText(String.valueOf(e.getRepos()));
+
     }
 }
