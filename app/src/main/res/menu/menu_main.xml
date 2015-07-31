@@ -21,24 +21,24 @@
         android:title="myProfile"
         android:icon="@drawable/ic_add_white_24dp"
         app:showAsAction="always">
-        <menu>
-            <item android:id="@+id/profile"
-                android:title="Profile name"/>
-                android:orderInCategory="100"/>
+        <!--<menu>-->
+            <!--<item android:id="@+id/profile"-->
+                <!--android:title="Profile name"/>-->
+                <!--android:orderInCategory="100"/>-->
 
-            <item android:id="@+id/com_ach"
-                android:title="@string/com_ach"
-                android:orderInCategory="200" />
+            <!--<item android:id="@+id/com_ach"-->
+                <!--android:title="@string/com_ach"-->
+                <!--android:orderInCategory="200" />-->
 
-            <item android:id="@+id/saved_ach"
-                android:title = "@string/saved_ach"
-                android:orderInCategory="300" />
+            <!--<item android:id="@+id/saved_ach"-->
+                <!--android:title = "@string/saved_ach"-->
+                <!--android:orderInCategory="300" />-->
 
-            <item android:id="@+id/log_out"
-                android:title="@string/log_out"
-                android:orderInCategory="400" />
+            <!--<item android:id="@+id/log_out"-->
+                <!--android:title="@string/log_out"-->
+                <!--android:orderInCategory="400" />-->
 
-        </menu>
+        <!--</menu>-->
     </item>
 
 </menu>

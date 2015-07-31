@@ -8,9 +8,12 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListPopupWindow;
 import android.widget.Toast;
 
 import com.example.androidbp.R;
@@ -48,6 +51,9 @@ public class MainActivity extends AppCompatActivity
 
     private static int REQUEST_CODE_RECOVER_PLAY_SERVICES = 200;
     public static final String EXTRA_MESSAGE = "ASFM PASMF";
+    public static final String com_arc = "Completed Archievements";
+    public static final String sav_arc = "Saved Archievements";
+    public static final String log_out = "Log out";
 
     public GoogleApiClient mGoogleApiClient;
     public static Location mLastLocation;
@@ -175,28 +181,47 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        //noinspection SimplifiableIfStatement
+//
+//        switch (id) {
+//            case (R.id.com_ach):
+//                toCompleteAchView();
+//                break;
+//            case (R.id.saved_ach):
+//                savedAchievement();
+//                break;
+//            case (R.id.log_out):
+//                logOut();
+//                break;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.action_overflow:
+                // Works as long as list item is always visible and does not go into the menu overflow
+                final View menuItemView = findViewById(R.id.action_overflow);
+                onListPopUp(menuItemView);
+                Log.w("TESTING OVERFLOW", "You called me OverFlow");
 
-        //noinspection SimplifiableIfStatement
-
-        switch (id) {
-            case (R.id.com_ach):
-                toCompleteAchView();
-                break;
-            case (R.id.saved_ach):
-                savedAchievement();
-                break;
-            case (R.id.log_out):
-                logOut();
-                break;
+                return true;
+            default:
+            {
+                return super.onOptionsItemSelected(item);
+            }
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Subscribe
@@ -326,39 +351,53 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-//    public void onListPopUp(View anchor)
-//    {
-//        // This a sample dat to fill our ListView
-//        ArrayList<DataItem> personItem = new ArrayList<DataItem>();
-//        personItem.add(new DataItem(R.drawable.ic_add_white_24dp, "Mamluki", "@DigitalSurgeonR"));
-//        personItem.add(new DataItem(0, "Lists", "@Lists"));
-//        personItem.add(new DataItem(0, "Drafts", "@Drafts"));
-//        personItem.add(new DataItem(0, "Accounts", "@Accounts"));
-//        // Initialise our adapter
-//        ListPopupWindowAdapter mListPopUpAdapter = new ListPopupWindowAdapter(this, personItem);
-//
-//        //Initialise our ListPopupWindow instance
-//        final ListPopupWindow pop = new ListPopupWindow(this);
-//        // Configure ListPopupWindow properties
-//        pop.setAdapter(mListPopUpAdapter);
-//        // Set the view below/above which ListPopupWindow dropdowns
-//        pop.setAnchorView(anchor);
-//        // Setting this enables window to be dismissed by click outside ListPopupWindow
-//        pop.setModal(true);
-//        // Sets the width of the ListPopupWindow
-//        pop.setContentWidth(150);
-//        // Sets the Height of the ListPopupWindow
-//        pop.setHeight(ListPopupWindow.WRAP_CONTENT);
-//        // Set up a click listener for the ListView items
-//        pop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-//                // Dismiss the LisPopupWindow when a list item is clicked
-//                pop.dismiss();
-//                Toast.makeText(MainActivity.this, "Clicked ListPopUp item " + ((Person) adapterView.getItemAtPosition(position)).getName(), Toast.LENGTH_LONG).show();
-//            }
-//        });
-//        pop.show();
-//    }
+    public void onListPopUp(View anchor)
+    {
+        // This a sample dat to fill our ListView
+        // find pic, name, last name to be correctly put
+        ArrayList<DataItem> personItem = new ArrayList<DataItem>();
+        personItem.add(new DataItem(R.drawable.ic_add_white_24dp, "NAME", "@USERNAME"));
+        personItem.add(new DataItem(0, com_arc, ""));
+        personItem.add(new DataItem(0, sav_arc, ""));
+        personItem.add(new DataItem(0, log_out, ""));
+        // Initialise our adapter
+        ListPopupWindowAdapter mListPopUpAdapter = new ListPopupWindowAdapter(this, personItem);
+
+        //Initialise our ListPopupWindow instance
+        final ListPopupWindow pop = new ListPopupWindow(this);
+        pop.setVerticalOffset(-105);
+        pop.setHorizontalOffset(-96);
+        // Configure ListPopupWindow properties
+        pop.setAdapter(mListPopUpAdapter);
+        // Set the view below/above which ListPopupWindow dropdowns
+        pop.setAnchorView(anchor);
+        // Setting this enables window to be dismissed by click outside ListPopupWindow
+        pop.setModal(true);
+        // Sets the width of the ListPopupWindow
+        pop.setContentWidth(370);
+        // Sets the Height of the ListPopupWindow
+        pop.setHeight(ListPopupWindow.WRAP_CONTENT);
+        // Set up a click listener for the ListView items
+        pop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                // Dismiss the LisPopupWindow when a list item is clicked
+                pop.dismiss();
+
+                String title = ((DataItem) adapterView.getItemAtPosition(position)).name;
+                switch (title) {
+                    case (com_arc):
+                        toCompleteAchView();
+                        break;
+                    case (sav_arc):
+                        savedAchievement();
+                        break;
+                    case (log_out):
+                        logOut();
+                        break;
+                }    }
+        });
+        pop.show();
+    }
 
 }
