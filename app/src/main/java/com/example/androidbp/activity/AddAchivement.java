@@ -1,16 +1,31 @@
 package com.example.androidbp.activity;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.androidbp.R;
 
+import java.io.File;
+import java.io.IOException;
+
 public class AddAchivement extends ActionBarActivity {
+
+    private Uri fileUri;
+    Bitmap photo;
+    String captured_image;
+    ImageButton imageButton;
+    public static final int PICTURE_REQUEST_CODE = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +67,44 @@ public class AddAchivement extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void cameraOn(View view){
-        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        startActivity(intent);
+    public void takePic(View view){
+//        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+//        startActivity(intent);
 //        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
 //        startActivityForResult(intent, 0);
+
+        // check camera
+        if(getApplicationContext().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
+            // open default camera
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            captured_image = System.currentTimeMillis() + ".jpg";
+            File file = new File(Environment.getExternalStorageDirectory(), captured_image);
+            captured_image = file.getAbsolutePath();
+            fileUri = Uri.fromFile(file);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+
+            // start the image capture intent
+            startActivityForResult(intent, PICTURE_REQUEST_CODE);
+        }
+        else {
+            Toast.makeText(getApplication(), "Camera not supported", Toast.LENGTH_LONG);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if(requestCode == PICTURE_REQUEST_CODE && resultCode == RESULT_OK) {
+            try {
+                photo = MediaStore.Images.Media.getBitmap(this.getContentResolver(), fileUri);
+            } catch (IOException e) {
+                Toast.makeText(getApplication(), "Unable to locate file", Toast.LENGTH_LONG);
+            }
+
+            imageButton = (ImageButton) findViewById(R.id.imageButton1);
+            imageButton.setImageBitmap(photo);
+
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
