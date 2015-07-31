@@ -41,10 +41,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         //Inject view id to above properties
         ButterKnife.bind(this);
 
+        //Google Maps api fragemnt
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.frameLayoutFragment, new MapFragment());
         ft.commit();
 
+        //Show icon on actionbar
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_launcher);
 
@@ -81,21 +83,21 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
+
         switch (id){
             case (R.id.com_ach):
                 toCompleteAchView();
                 break;
             case (R.id.saved_ach):
-
+                savedAchievement();
                 break;
             case (R.id.log_out):
-
+                logOut();
                 break;
                 
+
         }
-//        if (id == R.id.com_ach) {
-//            return true;
-//        }
+
 
 
 
@@ -112,12 +114,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         startActivity(intent);
     }
 
-    public void sendMessage(View view){
-//        Toast.makeText(this,"YES",Toast.LENGTH_LONG).show();
-
+    public void addAchievement(View view){
         Intent intent = new Intent(this, AddAchievement.class);
-        String message = "String Testing";
-        intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
+
+    }
+    public void logOut(){
+        Intent intent = new Intent(this, MainActivity.class);
+        Toast.makeText(this, "Log out", Toast.LENGTH_SHORT).show();
+    }
+    public void savedAchievement(){
+        Intent intent = new Intent(this, SavedAchievement.class);
         startActivity(intent);
     }
 

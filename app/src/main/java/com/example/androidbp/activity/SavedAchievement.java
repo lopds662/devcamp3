@@ -12,15 +12,15 @@ import android.widget.Toast;
 
 import com.example.androidbp.R;
 
-public class CompleteAchievement extends ActionBarActivity {
+public class SavedAchievement extends ActionBarActivity {
 
-    ListView listView;
+    private ListView listView;
     String[] listCompleted;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_complete_achievement);
+        setContentView(R.layout.activity_saved_achievement);
+
 
         // Get ListView object from xml
         listView = (ListView) findViewById(R.id.list);
@@ -28,17 +28,8 @@ public class CompleteAchievement extends ActionBarActivity {
         // Defined Array listCompleted to show in ListView
         listCompleted = getListCompleted();
 
-
-        // Define a new Adapter
-        // First parameter - Context
-        // Second parameter - Layout for the row
-        // Third parameter - ID of the TextView to which the data is written
-        // Forth - the Array of data
-
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, listCompleted);
-
-
         // Assign adapter to ListView
         listView.setAdapter(adapter);
 
@@ -57,18 +48,19 @@ public class CompleteAchievement extends ActionBarActivity {
 
                 // Show Alert
                 Toast.makeText(getApplicationContext(),
-                        "Position :"+itemPosition+"  ListItem : " +itemValue , Toast.LENGTH_LONG)
+                        "Position :" + itemPosition + "  ListItem : " + itemValue, Toast.LENGTH_LONG)
                         .show();
 
             }
 
         });
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_complete_achievement, menu);
+        getMenuInflater().inflate(R.menu.menu_saved_achievement, menu);
         return true;
     }
 
@@ -80,13 +72,12 @@ public class CompleteAchievement extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
-
     public String[] getListCompleted(){
         String[] listCompleted = new String[] { "Android List View",
                 "Adapter implementation",

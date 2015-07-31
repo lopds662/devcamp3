@@ -1,0 +1,26 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    android:paddingBottom="0dp"
+    tools:context="com.example.androidbp.activity.SavedAchievement"
+    android:weightSum="1"
+    android:padding="0dp"
+    android:orientation="vertical">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/editText"
+        android:hint="Search" />
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_height="match_parent"
+        android:layout_width="383dp">
+        android:
+    </ListView>
+
+</LinearLayout>

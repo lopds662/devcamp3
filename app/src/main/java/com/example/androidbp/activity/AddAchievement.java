@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -94,6 +95,7 @@ public class AddAchievement extends ActionBarActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("getPath", fileUri.getPath());
 
         if(requestCode == PICTURE_REQUEST_CODE && resultCode == RESULT_OK) {
             try {
@@ -117,12 +119,11 @@ public class AddAchievement extends ActionBarActivity {
             startActivity(intent);
             Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(this, "Please input achievement!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter achievement!", Toast.LENGTH_SHORT).show();
         }
     }
 
     public void addAchievement(String achievement){
-
-
+        
     }
 }
