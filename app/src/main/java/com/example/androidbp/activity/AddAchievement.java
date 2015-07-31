@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.androidbp.R;
@@ -19,7 +20,7 @@ import com.example.androidbp.R;
 import java.io.File;
 import java.io.IOException;
 
-public class AddAchivement extends ActionBarActivity {
+public class AddAchievement extends ActionBarActivity {
 
     private Uri fileUri;
     Bitmap photo;
@@ -60,7 +61,7 @@ public class AddAchivement extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.done) {
-
+            onClickDone();
             return true;
         }
 
@@ -106,5 +107,22 @@ public class AddAchivement extends ActionBarActivity {
 
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+    public void onClickDone(){
+        TextView textView = (TextView) findViewById(R.id.textAddAchievement);
+        String text = textView.getText().toString();
+        if (!text.equals("")) {
+            addAchievement(text);
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "Please input achievement!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void addAchievement(String achievement){
+
+
     }
 }

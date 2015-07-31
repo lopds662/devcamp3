@@ -13,6 +13,7 @@
         android:visibility="visible" />
     
     <EditText
+        android:id="@+id/textAddAchievement"
         android:layout_width="fill_parent"
         android:layout_height="50dp" />
 
