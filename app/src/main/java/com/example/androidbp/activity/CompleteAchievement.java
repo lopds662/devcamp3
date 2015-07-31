@@ -6,16 +6,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.androidbp.R;
 
+import java.util.ArrayList;
+
 public class CompleteAchievement extends ActionBarActivity {
 
     ListView listView;
-    String[] listCompleted;
     Achievement[] listAchieCom;
 
     @Override
@@ -92,51 +92,20 @@ public class CompleteAchievement extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public String[] getListCompleted(){
-        String[] listCompleted = new String[] { "Android List View",
-                "Adapter implementation",
-                "Simple List View In Android",
-                "Create List View Android",
-                "Android Example",
-                "List View Source Code",
-                "List View Array Adapter",
-                "Android Example List View",
-                "1" ,
-                "2",
-                "3",
-                "4",
-                "5",
-                "6",
-                "7",
-                "8"
-        };
-        return listCompleted;
+    public Achievement[] getListAchieCom(){
+        Data a = new Data();
+        Achievement[] list1 = new Achievement[Data.completedAchievement.size()];
+        Data.completedAchievement.toArray(list1);
+        return list1;
     }
 
-    public Achievement[] getListAchieCom(){
-        Achievement[] list = new Achievement[]{new Achievement("Ban Ing Koaw","Saraburi"),
-                new Achievement("Kasetsart","Bankok"),
-                new Achievement("Nam Tok Chet Sao Noi","Saraburi"),
-                new Achievement("Khun Malee Grape Farm","Saraburi"),
-                new Achievement("Papasara Grape Farm","Saraburi"),
-                new Achievement("ÊÇ¹Í§Øè¹ÀÙÍÁÃáÅÐäÇ¹ìÍ§Øè¹ÀÙÍÁÃ","Saraburi"),
-                new Achievement("Kamnan Meng Grape Farm","Saraburi"),
-                new Achievement("ÍØâÁ§¤ìµé¹äÁé","Saraburi"),
-                new Achievement("·Øè§·Ò¹µÐÇÑ¹áÊÅ§¾Ñ¹","Saraburi"),
-                new Achievement("MuakLek ATV","Saraburi"),
-                new Achievement("Buddhist Temple ÇÑ´¾ÃÐ¾Ø·¸©ÒÂ ","Saraburi"),
-                new Achievement("Wat Phra Phutthabat","Saraburi"),
-                new Achievement("ÈÙ¹ÂìÈÖ¡ÉÒ¸ÃÃÁªÒµÔáÅÐ·èÍ§à·ÕèÂÇàªÔ§¹ÔàÇÈ¹ìà¨ç´¤µ-â»è§¡éÍ¹àÊÒ","Saraburi"),
-                new Achievement("¹éÓµ¡â¡Ã¡ÍÕ´¡","Saraburi"),
-                new Achievement("Pa Sak Cholasit ","Saraburi"),
-                new Achievement("Namtok Sam Lan National Park","Saraburi"),
-                new Achievement("laisakunahansa","Saraburi"),
-                new Achievement("Rai Kusuma Resort ","Saraburi"),
-                new Achievement("Wat Tham Phra Phothisat","Saraburi"),
-                new Achievement("ÊÇ¹ÃØ¡¢ªÒµÔÁÇ¡àËÅç¡","Saraburi"),
-                new Achievement("ÃéÒ¹ÍÒËÒÃà¤ÕÂ§ÇÒÃÔ¹ Í. àÊÒäËé","Saraburi"),
-                new Achievement("Wat Pa Sawan Bun","Saraburi")
-        };
-        return list;
+    /**
+     * Get List CompleteAchievement from database.
+     * @return array of Achievement
+     */
+    public Achievement[] getListCompleteAchievement(){
+
+        return null;
+
     }
 }
