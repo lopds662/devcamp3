@@ -3,6 +3,7 @@ package com.example.androidbp.activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -27,6 +28,7 @@ public class AddAchievement extends ActionBarActivity {
     Bitmap photo;
     String captured_image;
     ImageButton imageButton;
+    File file;
     public static final int PICTURE_REQUEST_CODE = 200;
 
     @Override
@@ -44,6 +46,8 @@ public class AddAchievement extends ActionBarActivity {
 //
 //        // Set the text view as the activity layout
 //        setContentView(textView);
+
+        imageButton = (ImageButton) findViewById(R.id.imageButton1);
     }
 
     @Override
@@ -69,6 +73,7 @@ public class AddAchievement extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     public void takePic(View view){
 //        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
 //        startActivity(intent);
@@ -80,7 +85,7 @@ public class AddAchievement extends ActionBarActivity {
             // open default camera
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             captured_image = System.currentTimeMillis() + ".jpg";
-            File file = new File(Environment.getExternalStorageDirectory(), captured_image);
+            file = new File(Environment.getExternalStorageDirectory(), captured_image);
             captured_image = file.getAbsolutePath();
             fileUri = Uri.fromFile(file);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
@@ -95,21 +100,57 @@ public class AddAchievement extends ActionBarActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("getPath", fileUri.getPath());
+
 
         if(requestCode == PICTURE_REQUEST_CODE && resultCode == RESULT_OK) {
-            try {
-                photo = MediaStore.Images.Media.getBitmap(this.getContentResolver(), fileUri);
-            } catch (IOException e) {
-                Toast.makeText(getApplication(), "Unable to locate file", Toast.LENGTH_LONG);
-            }
+            Log.d("getPath", fileUri.getPath());
+//            try {
+//                photo = MediaStore.Images.Media.getBitmap(this.getContentResolver(), fileUri);
+//            } catch (IOException e) {
+//                Toast.makeText(getApplication(), "Unable to locate file", Toast.LENGTH_LONG);
+//            }
 
-            imageButton = (ImageButton) findViewById(R.id.imageButton1);
-            imageButton.setImageBitmap(photo);
+//            imageButton.setImageBitmap(photo);
+            imageButton.setImageBitmap(decodeSampledBitmapFromFile(file.getAbsolutePath(), 1000, 500));
 
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    public static Bitmap decodeSampledBitmapFromFile(String path, int reqWidth, int reqHeight) { // BEST QUALITY MATCH
+
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(path, options);
+
+        // Calculate inSampleSize
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        options.inPreferredConfig = Bitmap.Config.RGB_565;
+        int inSampleSize = 1;
+
+        if (height > reqHeight) {
+            inSampleSize = Math.round((float)height / (float)reqHeight);
+        }
+
+        int expectedWidth = width / inSampleSize;
+
+        if (expectedWidth > reqWidth) {
+            //if(Math.round((float)width / (float)reqWidth) > inSampleSize) // If bigger SampSize..
+            inSampleSize = Math.round((float)width / (float)reqWidth);
+        }
+
+
+        options.inSampleSize = inSampleSize;
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+
+        return BitmapFactory.decodeFile(path, options);
+    }
+
     public void onClickDone(){
         TextView textView = (TextView) findViewById(R.id.textAddAchievement);
         String text = textView.getText().toString();
