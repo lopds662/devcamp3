@@ -2,34 +2,45 @@ package com.example.androidbp.activity;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.androidbp.R;
 
+import java.util.ArrayList;
+
 public class SavedAchievement extends ActionBarActivity {
 
     private ListView listView;
-    String[] listCompleted;
+    private TextView etSearch;
+
+    ArrayList<String> listSaved;
+    Achievement[] listSavedAchievement;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_achievement);
 
-
         // Get ListView object from xml
         listView = (ListView) findViewById(R.id.list);
 
         // Defined Array listCompleted to show in ListView
-        listCompleted = getListCompleted();
+        listSaved = getListSaved();
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, listCompleted);
+                android.R.layout.simple_list_item_1, android.R.id.text1, listSaved);
         // Assign adapter to ListView
         listView.setAdapter(adapter);
 
@@ -55,6 +66,28 @@ public class SavedAchievement extends ActionBarActivity {
 
         });
 
+        // Search Engine in
+        // Add Text Change Listener to EditText
+        etSearch = (EditText) findViewById(R.id.etSearch);
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                setListBySearched();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+
     }
 
     @Override
@@ -78,8 +111,8 @@ public class SavedAchievement extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    public String[] getListCompleted(){
-        String[] listCompleted = new String[] { "Android List View",
+    public ArrayList<String> getListSaved(){
+        String[] list = new String[] { "Android List View",
                 "Adapter implementation",
                 "Simple List View In Android",
                 "Create List View Android",
@@ -96,6 +129,65 @@ public class SavedAchievement extends ActionBarActivity {
                 "7",
                 "8"
         };
-        return listCompleted;
+        ArrayList<String> listSaved = new ArrayList<>();
+        for(String i : list){
+            listSaved.add(i);
+        }
+
+        //Wait for back-end
+//        for(String i : listSavedAchievement.toString()){
+//            listSaved.add(i);
+//        }
+        
+        return listSaved;
+    }
+    public ArrayList<String> getListBySearch(String inputSearch) {
+        ArrayList<String> listedBySearch = new ArrayList<>();
+        for (String i : listSaved) {
+            if ((i.toLowerCase()).startsWith(inputSearch.toLowerCase())) {
+                listedBySearch.add(i);
+            }
+        }
+    return  listedBySearch;
+    }
+
+    protected void setListBySearched(){
+        // Get ListView object from xml
+        listView = (ListView) findViewById(R.id.list);
+
+        // Defined Array listCompleted to show in ListView
+        ArrayList<String> listBySearch = getListBySearch(etSearch.getText().toString());
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, android.R.id.text1, listBySearch);
+        // Assign adapter to ListView
+        listView.setAdapter(adapter);
+
+        // ListView Item Click Listener
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                // ListView Clicked item index
+                int itemPosition     = position;
+
+                // ListView Clicked item value
+                String  itemValue    = (String) listView.getItemAtPosition(position);
+
+                // Show Alert
+                Toast.makeText(getApplicationContext(),
+                        "Position :" + itemPosition + "  ListItem : " + itemValue, Toast.LENGTH_LONG)
+                        .show();
+
+            }
+
+        });
+    }
+    public Achievement[] getSavedAchievement(){
+        //code back-end
+//        listSavedAchievement = input;
+        return listSavedAchievement;
     }
 }

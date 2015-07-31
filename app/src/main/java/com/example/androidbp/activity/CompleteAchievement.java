@@ -60,8 +60,9 @@ public class CompleteAchievement extends ActionBarActivity {
                 Achievement  itemValue    = (Achievement) listView.getItemAtPosition(position);
 
                 // Show Alert
+
                 Toast.makeText(getApplicationContext(),
-                        "Position :"+itemPosition+"  ListItem : " +itemValue.getName() , Toast.LENGTH_LONG)
+                        "Position :"+itemPosition+"  ListItem : " +itemValue.getName() , Toast.LENGTH_SHORT)
                         .show();
 
             }
@@ -84,9 +85,9 @@ public class CompleteAchievement extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -113,8 +114,28 @@ public class CompleteAchievement extends ActionBarActivity {
     }
 
     public Achievement[] getListAchieCom(){
-        Achievement[] list = new Achievement[]{new Achievement("Ban Ing Koaw","Saraburi")
-
+        Achievement[] list = new Achievement[]{new Achievement("Ban Ing Koaw","Saraburi"),
+                new Achievement("Kasetsart","Bankok"),
+                new Achievement("Nam Tok Chet Sao Noi","Saraburi"),
+                new Achievement("Khun Malee Grape Farm","Saraburi"),
+                new Achievement("Papasara Grape Farm","Saraburi"),
+                new Achievement("สวนองุ่นภูอมรและไวน์องุ่นภูอมร","Saraburi"),
+                new Achievement("Kamnan Meng Grape Farm","Saraburi"),
+                new Achievement("อุโมงค์ต้นไม้","Saraburi"),
+                new Achievement("ทุ่งทานตะวันแสลงพัน","Saraburi"),
+                new Achievement("MuakLek ATV","Saraburi"),
+                new Achievement("Buddhist Temple วัดพระพุทธฉาย ","Saraburi"),
+                new Achievement("Wat Phra Phutthabat","Saraburi"),
+                new Achievement("ศูนย์ศึกษาธรรมชาติและท่องเที่ยวเชิงนิเวศน์เจ็ดคต-โป่งก้อนเสา","Saraburi"),
+                new Achievement("น้ำตกโกรกอีดก","Saraburi"),
+                new Achievement("Pa Sak Cholasit ","Saraburi"),
+                new Achievement("Namtok Sam Lan National Park","Saraburi"),
+                new Achievement("laisakunahansa","Saraburi"),
+                new Achievement("Rai Kusuma Resort ","Saraburi"),
+                new Achievement("Wat Tham Phra Phothisat","Saraburi"),
+                new Achievement("สวนรุกขชาติมวกเหล็ก","Saraburi"),
+                new Achievement("ร้านอาหารเคียงวาริน อ. เสาไห้","Saraburi"),
+                new Achievement("Wat Pa Sawan Bun","Saraburi")
         };
         return list;
     }
