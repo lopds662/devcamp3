@@ -2,23 +2,35 @@ package com.example.androidbp.activity;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.androidbp.R;
 import com.example.androidbp.event.GithubRepoLoaded;
 import com.example.androidbp.manager.BusManager;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.drive.Drive;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.MapFragment;
 import com.squareup.otto.Subscribe;
 
+import java.text.BreakIterator;
+
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     public static final String EXTRA_MESSAGE = "ASFM PASMF";
+    GoogleApiClient mGoogleApiClient;
+    private Location mLastLocation;
+    private BreakIterator mLatitudeText;
+    private BreakIterator mLongitudeText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +48,10 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_launcher);
 
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(Drive.API)
+                .addScope(Drive.SCOPE_FILE)
+                .build();
     }
 
     @Override
@@ -103,6 +119,36 @@ public class MainActivity extends AppCompatActivity {
         String message = "String Testing";
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
+    }
+
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+        if (mLastLocation != null) {
+            mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
+            mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
+            String temp = "Test Located"+mLatitudeText.toString() + mLongitudeText.toString();
+            Toast.makeText(this, "Temp", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
 
     }
 }
