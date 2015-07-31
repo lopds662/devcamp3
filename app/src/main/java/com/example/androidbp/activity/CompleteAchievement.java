@@ -4,17 +4,69 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.androidbp.R;
 
 public class CompleteAchievement extends ActionBarActivity {
 
+    ListView listView;
+    String[] listCompleted;
+    Achievement[] listAchieCom;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complete_achievement);
+
+        // Get ListView object from xml
+        listView = (ListView) findViewById(R.id.list);
+
+        // Defined Array listCompleted to show in ListView
+//        listCompleted = getListCompleted();
+        listAchieCom = getListAchieCom();
+
+
+        // Define a new Adapter
+        // First parameter - Context
+        // Second parameter - Layout for the row
+        // Third parameter - ID of the TextView to which the data is written
+        // Forth - the Array of data
+
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+//                android.R.layout.simple_list_item_1, android.R.id.text1, listCompleted);
+        CustomArrayAdapter achieAdapter = new CustomArrayAdapter(this,android.R.layout.simple_list_item_1,listAchieCom);
+
+
+        // Assign adapter to ListView
+//        listView.setAdapter(adapter);
+        listView.setAdapter(achieAdapter);
+
+        // ListView Item Click Listener
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                // ListView Clicked item index
+                int itemPosition     = position;
+
+                // ListView Clicked item value
+                Achievement  itemValue    = (Achievement) listView.getItemAtPosition(position);
+
+                // Show Alert
+                Toast.makeText(getApplicationContext(),
+                        "Position :"+itemPosition+"  ListItem : " +itemValue.getName() , Toast.LENGTH_LONG)
+                        .show();
+
+            }
+
+        });
     }
 
     @Override
@@ -37,5 +89,33 @@ public class CompleteAchievement extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public String[] getListCompleted(){
+        String[] listCompleted = new String[] { "Android List View",
+                "Adapter implementation",
+                "Simple List View In Android",
+                "Create List View Android",
+                "Android Example",
+                "List View Source Code",
+                "List View Array Adapter",
+                "Android Example List View",
+                "1" ,
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8"
+        };
+        return listCompleted;
+    }
+
+    public Achievement[] getListAchieCom(){
+        Achievement[] list = new Achievement[]{new Achievement("Ban Ing Koaw","Saraburi")
+
+        };
+        return list;
     }
 }

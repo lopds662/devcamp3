@@ -38,6 +38,8 @@
 
     </LinearLayout>
 
+
+    <!--FloatingActionButton-->
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -47,7 +49,7 @@
         android:src="@drawable/ic_add_white_24dp"
         app:layout_anchor="@id/viewA"
         app:layout_anchorGravity="bottom|right|end"
-        android:onClick="sendMessage"
+        android:onClick="addAchievement"
         />
 
 
