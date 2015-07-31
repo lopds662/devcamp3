@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         //Inject view id to above properties
@@ -67,14 +68,21 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.log_out) {
-            logOut();
-            return true;
+
+        switch (id){
+            case (R.id.com_ach):
+                toCompleteAchView();
+                break;
+            case (R.id.saved_ach):
+                savedAchievement();
+                break;
+            case (R.id.log_out):
+                logOut();
+                break;
+                
+
         }
-        if (id == R.id.saved_ach){
-            savedAchievement();
-            return true;
-        }
+
 
 
 
@@ -84,6 +92,11 @@ public class MainActivity extends AppCompatActivity {
     @Subscribe
     public void HandleCountButtonClicked(GithubRepoLoaded e) {
 
+    }
+
+    public void toCompleteAchView(){
+        Intent intent = new Intent(this,CompleteAchievement.class);
+        startActivity(intent);
     }
 
     public void sendMessage(View view){

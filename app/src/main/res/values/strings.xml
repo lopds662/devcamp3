@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Maps</string>
-
     <string name="hello_world">Hello world!</string>
     <string name="com_ach">Completed Achievement</string>
     <string name="saved_ach">Saved Achievement</string>
@@ -14,4 +13,5 @@
     <string name="title_activity_completed">Completed Activity</string>
     <string name="title_activity_logout">LogoutActivity</string>
     <string name="title_activity_saved_achievement">SavedAchievement</string>
+
 </resources>
