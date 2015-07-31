@@ -33,6 +33,13 @@ public class AddAchievement extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_achivement);
+
+
+//        TextView textView = (TextView) findViewById(R.id.textView);
+//        String latitudeText = String.valueOf(MainActivity.mLastLocation.getLatitude());
+//        String longitudeText = String.valueOf(MainActivity.mLastLocation.getLongitude());
+//        String temp = "test location " + latitudeText + " baeee " + longitudeText;
+//        textView.setText(temp);
 //        // Get message from the intent
 //        Intent intent = getIntent();
 //        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
