@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity
 
             myPosition = new LatLng(latitude, longitude);
 
-            googleMap.addMarker(new MarkerOptions().position(myPosition).title("Start"));
+//            googleMap.addMarker(new MarkerOptions().position(myPosition).title("Start"));
 
         }
     }
@@ -201,31 +201,11 @@ public class MainActivity extends AppCompatActivity
                         ", Longitude:" + mLastLocation.getLongitude(),
                 Toast.LENGTH_LONG).show();
 
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-        String addressText = "";
-        try {//14.726414, 101.188287
-            List<Address> listA = geocoder.getFromLocation(mLastLocation.getLatitude(), mLastLocation.getLongitude(), 1);
-            ArrayList<String> addressGet = new ArrayList<>();
-            addressGet.add(listA.get(0).getCountryName());
-            addressGet.add(listA.get(0).getAdminArea());
-            addressGet.add(listA.get(0).getSubAdminArea());
-            addressGet.add(listA.get(0).getThoroughfare());
-            addressGet.add(listA.get(0).getPostalCode());
-            for (int i = 0; i < 5; i++) {
-                String temp = addressGet.get(i);
-                if (temp != null) {
-                    addressText = addressText + temp + "  ";
-                }
-            }
-            addressText += "\n";
-        } catch (IOException e) {
-            e.printStackTrace();
-//            Toast.makeText(this, "Null", Toast.LENGTH_LONG).show();
-        }
-        Toast.makeText(this, "value in temp >>: " + addressText, Toast.LENGTH_LONG).show();
-
+        double lat = mLastLocation.getLatitude();
+        double log = mLastLocation.getLongitude();
         Intent i = new Intent(getApplicationContext(), AddAchievement.class);
-        i.putExtra("address", addressText);
+        i.putExtra("latitude", lat);
+        i.putExtra("longitude", log);
         startActivity(i);
         //Log.d("ADDRESS", temp);
     }

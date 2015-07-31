@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -27,6 +29,10 @@ import com.example.androidbp.manager.HttpManager;
 import org.w3c.dom.Text;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -42,6 +48,8 @@ public class AddAchievement extends ActionBarActivity {
     File file;
     Bitmap bitmap;
     public static final int PICTURE_REQUEST_CODE = 200;
+    double latitude = 0;
+    double longitude = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +57,38 @@ public class AddAchievement extends ActionBarActivity {
         setContentView(R.layout.activity_add_achivement);
 
         Bundle extras = getIntent().getExtras();
-        String value = "";
+
         if (extras != null) {
-            value = extras.getString("address");
+            latitude = extras.getDouble("latitude");
+            longitude = extras.getDouble("longitude");
         }
+
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        String addressText = "";
+        try {
+            List<Address> listA = geocoder.getFromLocation(latitude, longitude, 1);
+            ArrayList<String> addressGet = new ArrayList<>();
+            addressGet.add(listA.get(0).getCountryName());
+            addressGet.add(listA.get(0).getAdminArea());
+            addressGet.add(listA.get(0).getSubAdminArea());
+            addressGet.add(listA.get(0).getThoroughfare());
+            addressGet.add(listA.get(0).getPostalCode());
+            for (int i = 0; i < 5; i++) {
+                String temp = addressGet.get(i);
+                if (temp != null) {
+                    addressText = addressText + temp + "  ";
+                }
+            }
+            addressText += "\n";
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         TextView textView = (TextView) findViewById(R.id.textView);
-        textView.setText(value);
+        textView.setText(addressText);
+
+
+
 
 
 
@@ -194,7 +228,7 @@ public class AddAchievement extends ActionBarActivity {
         TextView textView = (TextView) findViewById(R.id.textAddAchievement);
         String text = textView.getText().toString();
         if (!text.equals("")) {
-            addAchievement(text);
+            addAchievement(text, latitude, longitude);
 //            Intent intent = new Intent(this, MainActivity.class);
 //            startActivity(intent);
             finish();
@@ -204,7 +238,7 @@ public class AddAchievement extends ActionBarActivity {
         }
     }
 
-    public void addAchievement(final String achievement){
+    public void addAchievement(final String achievement, double latitude, double longitude){
         TypedFile typedImage = new TypedFile("application/octet-stream", file);
         HttpManager.ApiFor(Api.class).uploadImage(typedImage, new Callback<ImageUploadResult>() {
             @Override
@@ -222,8 +256,8 @@ public class AddAchievement extends ActionBarActivity {
     private void callHttpCreateAchievement(String imageId, String achievement) {
         CreateAchievementBody body = new CreateAchievementBody();
         body.title = achievement;
-        body.latitude = 50.00f;
-        body.longitude = 40.00f;
+        body.latitude = (float)latitude;
+        body.longitude = (float)longitude;
         body.image_id = imageId;
         HttpManager.ApiFor(Api.class).createNewAchievement(body, new Callback<AchievementItem>() {
             @Override
