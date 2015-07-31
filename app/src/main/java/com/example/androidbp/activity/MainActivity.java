@@ -99,10 +99,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void sendMessage(View view){
+    public void addAchievement(View view){
         Intent intent = new Intent(this, AddAchievement.class);
-        String message = "String Testing";
-        intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
 
     }
