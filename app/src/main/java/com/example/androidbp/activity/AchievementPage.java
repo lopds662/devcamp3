@@ -32,10 +32,19 @@ public class AchievementPage extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_achievement_page);
 
+        String id = "";
+        String profile_id = "";
+
+        // get id's from MainActivity
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            id = extras.getString("id");
+            profile_id = extras.getString("profile_id");
+        }
+
         Map<String, String> params = new HashMap<String, String>();
-        // get the post's id & profile's id
-        params.put("id", "");
-        params.put("profile_id", "");
+        params.put("id", id);
+        params.put("profile_id", profile_id);
         HttpManager.ApiFor(Api.class).showDetail(params, new Callback<AchievementItem>() {
             @Override
             public void success(AchievementItem achievementItem, Response response) {

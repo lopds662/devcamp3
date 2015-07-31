@@ -45,6 +45,7 @@ public class MarkerFactory {
                         color = BitmapDescriptorFactory.HUE_BLUE;
                     }
                     m.icon(BitmapDescriptorFactory.defaultMarker(color));
+
                 }
             }
 

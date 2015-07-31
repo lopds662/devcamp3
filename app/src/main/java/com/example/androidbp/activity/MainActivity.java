@@ -29,6 +29,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.otto.Subscribe;
 
@@ -123,7 +124,24 @@ public class MainActivity extends AppCompatActivity
 
             googleMap.addMarker(new MarkerOptions().position(myPosition).title("Start"));
 
+
+
         }
+
+        // click marker to show detail on AchievementPage
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                Intent i = new Intent(getApplicationContext(), AchievementPage.class);
+                // get the post's id & profile's id ???????
+                i.putExtra("id", "");
+                i.putExtra("profile_id", "");
+                startActivity(i);
+                return true;
+            }
+        });
+
+//        getUiSettings().setMapToolbarEnabled(false);
     }
 
     protected synchronized void buildGoogleApiClient() {
