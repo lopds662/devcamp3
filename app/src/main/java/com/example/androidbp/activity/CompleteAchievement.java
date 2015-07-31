@@ -16,6 +16,7 @@ public class CompleteAchievement extends ActionBarActivity {
 
     ListView listView;
     String[] listCompleted;
+    Achievement[] listAchieCom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,8 @@ public class CompleteAchievement extends ActionBarActivity {
         listView = (ListView) findViewById(R.id.list);
 
         // Defined Array listCompleted to show in ListView
-        listCompleted = getListCompleted();
+//        listCompleted = getListCompleted();
+        listAchieCom = getListAchieCom();
 
 
         // Define a new Adapter
@@ -35,12 +37,14 @@ public class CompleteAchievement extends ActionBarActivity {
         // Third parameter - ID of the TextView to which the data is written
         // Forth - the Array of data
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, listCompleted);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+//                android.R.layout.simple_list_item_1, android.R.id.text1, listCompleted);
+        CustomArrayAdapter achieAdapter = new CustomArrayAdapter(this,android.R.layout.simple_list_item_1,listAchieCom);
 
 
         // Assign adapter to ListView
-        listView.setAdapter(adapter);
+//        listView.setAdapter(adapter);
+        listView.setAdapter(achieAdapter);
 
         // ListView Item Click Listener
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -53,11 +57,11 @@ public class CompleteAchievement extends ActionBarActivity {
                 int itemPosition     = position;
 
                 // ListView Clicked item value
-                String  itemValue    = (String) listView.getItemAtPosition(position);
+                Achievement  itemValue    = (Achievement) listView.getItemAtPosition(position);
 
                 // Show Alert
                 Toast.makeText(getApplicationContext(),
-                        "Position :"+itemPosition+"  ListItem : " +itemValue , Toast.LENGTH_LONG)
+                        "Position :"+itemPosition+"  ListItem : " +itemValue.getName() , Toast.LENGTH_SHORT)
                         .show();
 
             }
@@ -106,5 +110,13 @@ public class CompleteAchievement extends ActionBarActivity {
                 "8"
         };
         return listCompleted;
+    }
+
+    public Achievement[] getListAchieCom(){
+        Achievement[] list = new Achievement[]{new Achievement("Ban Ing Koaw","Saraburi"),
+                new Achievement("Kasetsart","Bankok")
+
+        };
+        return list;
     }
 }
