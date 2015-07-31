@@ -9,7 +9,8 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="225dp" />
+        android:layout_height="225dp"
+        android:id="@+id/imageView_achievement"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -20,23 +21,24 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:src="@mipmap/ic_launcher"
-            android:id="@+id/imageView"
+            android:id="@+id/imageView_creator"
             android:padding="10dp"
             android:layout_alignParentTop="true" />
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="50dp"
-            android:layout_toRightOf="@+id/imageView"
-            android:layout_toEndOf="@+id/imageView"
-            android:id="@+id/textView2"
+            android:layout_toRightOf="@+id/imageView_creator"
+            android:layout_toEndOf="@+id/imageView_creator"
+            android:id="@+id/textView_achievement"
             android:text="Place" />
 
         <TextView
             android:layout_width="179dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView2"
-            android:layout_toRightOf="@+id/imageView"
-            android:layout_alignBottom="@+id/imageView"
+            android:layout_below="@+id/textView_achievement"
+            android:layout_toRightOf="@+id/imageView_creator"
+            android:id="@+id/textView_creator"
+            android:layout_alignBottom="@+id/imageView_creator"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:text="Owner name" />

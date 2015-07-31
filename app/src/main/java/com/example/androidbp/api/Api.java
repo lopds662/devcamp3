@@ -7,6 +7,7 @@ import com.example.androidbp.api.model.ImageUploadResult;
 import com.example.androidbp.api.model.Repo;
 
 import java.util.List;
+import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.http.Body;
@@ -15,6 +16,7 @@ import retrofit.http.Multipart;
 import retrofit.http.POST;
 import retrofit.http.Part;
 import retrofit.http.Path;
+import retrofit.http.QueryMap;
 import retrofit.mime.TypedFile;
 
 /**
@@ -33,4 +35,10 @@ public interface Api {
     @POST("/image/upload")
     @Multipart
     void uploadImage(@Part("file") TypedFile file, Callback<ImageUploadResult> cb);
+
+    @GET("/post/detail")
+    void showDetail(@QueryMap Map<String, String> map, Callback<AchievementItem> cb);
+
+    @GET("/post/nearby")
+    void archievementNearby(@QueryMap Map<String, Float> m, Callback<List<ArchivementFeedItem>> cb);
 }

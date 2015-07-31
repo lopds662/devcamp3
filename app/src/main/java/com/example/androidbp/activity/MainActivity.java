@@ -28,6 +28,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.otto.Subscribe;
 
 import java.text.BreakIterator;
+import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 
@@ -278,6 +279,7 @@ public class MainActivity extends AppCompatActivity
     protected void startLocationUpdates() {
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
     }
+
     @Override
     public void onLocationChanged(Location location) {
         mLastLocation = location;
@@ -302,6 +304,41 @@ public class MainActivity extends AppCompatActivity
                 mGoogleApiClient, this);
 
     }
+
+//    public void onListPopUp(View anchor)
+//    {
+//        // This a sample dat to fill our ListView
+//        ArrayList<DataItem> personItem = new ArrayList<DataItem>();
+//        personItem.add(new DataItem(R.drawable.ic_add_white_24dp, "Mamluki", "@DigitalSurgeonR"));
+//        personItem.add(new DataItem(0, "Lists", "@Lists"));
+//        personItem.add(new DataItem(0, "Drafts", "@Drafts"));
+//        personItem.add(new DataItem(0, "Accounts", "@Accounts"));
+//        // Initialise our adapter
+//        ListPopupWindowAdapter mListPopUpAdapter = new ListPopupWindowAdapter(this, personItem);
+//
+//        //Initialise our ListPopupWindow instance
+//        final ListPopupWindow pop = new ListPopupWindow(this);
+//        // Configure ListPopupWindow properties
+//        pop.setAdapter(mListPopUpAdapter);
+//        // Set the view below/above which ListPopupWindow dropdowns
+//        pop.setAnchorView(anchor);
+//        // Setting this enables window to be dismissed by click outside ListPopupWindow
+//        pop.setModal(true);
+//        // Sets the width of the ListPopupWindow
+//        pop.setContentWidth(150);
+//        // Sets the Height of the ListPopupWindow
+//        pop.setHeight(ListPopupWindow.WRAP_CONTENT);
+//        // Set up a click listener for the ListView items
+//        pop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+//                // Dismiss the LisPopupWindow when a list item is clicked
+//                pop.dismiss();
+//                Toast.makeText(MainActivity.this, "Clicked ListPopUp item " + ((Person) adapterView.getItemAtPosition(position)).getName(), Toast.LENGTH_LONG).show();
+//            }
+//        });
+//        pop.show();
+//    }
 
 
 

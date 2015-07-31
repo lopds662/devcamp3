@@ -25,7 +25,7 @@ public class HttpManager {
         instance.context = ctx;
 
         instance.rest = new RestAdapter.Builder()
-                .setEndpoint("http://192.168.43.62")
+                .setEndpoint("http://192.168.2.108")
                 .build();
     }
 
