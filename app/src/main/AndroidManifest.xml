@@ -50,6 +50,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.androidbp.activity.MainActivity" />
         </activity>
+        <activity
+            android:name=".activity.CompleteAchievement"
+            android:label="@string/title_activity_add_achievement"
+            android:parentActivityName=".activity.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.androidbp.activity.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
