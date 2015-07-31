@@ -1,48 +1,43 @@
 package com.example.androidbp.activity;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.androidbp.R;
+import com.example.androidbp.api.model.ArchivementFeedItem;
+
+import java.util.List;
 
 /**
  * Created by HackercleverPalm on 31/7/2558.
  */
-public class CustomArrayAdapter extends ArrayAdapter<Achievement> {
+public class CustomArrayAdapter extends RecyclerView.Adapter<AchievementViewHolder> {
 
-    private final Context context;
-    private final Achievement[] values;
+    private Context context;
+    private List<ArchivementFeedItem> list;
 
-    public CustomArrayAdapter(Context context, int resource, Achievement[] objects) {
-        super(context, resource, objects);
-        this.context = context;
-        this.values = objects;
+    public void setData(List<ArchivementFeedItem> list) {
+        this.list = list;
     }
 
-//    public CustomArrayAdapter(Context context, String[] values) {
-//        super(context, -1, values);
-//        this.context = context;
-//        this.values = values;
-//    }
+    @Override
+    public AchievementViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.achievement_cardlayout, parent, false);
+        AchievementViewHolder ac = new AchievementViewHolder(v);
+        return ac;
+    }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.achievement_view, parent, false);
-        TextView achievement = (TextView) rowView.findViewById(R.id.nameAchievement);
-        TextView location = (TextView) rowView.findViewById(R.id.achievementLocation);
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
-        achievement.setText(values[position].getName());
-        location.setText(values[position].getName());
-//        imageView.setImageResource(R.drawable.ic_add_white_24dp);
-        imageView.setImageResource(values[position].getRes());
+    public void onBindViewHolder(AchievementViewHolder holder, int position) {
+        holder.bindData(list.get(position));
+    }
 
-        return rowView;
+    @Override
+    public int getItemCount() {
+        if (list == null) return 0;
+        return list.size();
     }
 }

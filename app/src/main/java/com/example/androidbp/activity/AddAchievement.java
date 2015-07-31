@@ -18,8 +18,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.androidbp.R;
+import com.example.androidbp.api.Api;
+import com.example.androidbp.api.model.AchievementItem;
+import com.example.androidbp.api.model.CreateAchievementBody;
+import com.example.androidbp.manager.HttpManager;
 
 import java.io.File;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class AddAchievement extends ActionBarActivity {
 
@@ -175,6 +183,22 @@ public class AddAchievement extends ActionBarActivity {
     }
 
     public void addAchievement(String achievement){
-        
+        CreateAchievementBody body = new CreateAchievementBody();
+        body.title = achievement;
+        body.latitude = 50.00f;
+        body.longitude = 40.00f;
+        body.image_id = "asdfasdfsadf";
+        HttpManager.ApiFor(Api.class).createNewAchievement(body, new Callback<AchievementItem>() {
+            @Override
+            public void success(AchievementItem achievementItem, Response response) {
+                Log.d("GGG", String.valueOf(achievementItem));
+                Toast.makeText(AddAchievement.this, "Success", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e("GGG", error.getMessage());
+            }
+        });
     }
 }

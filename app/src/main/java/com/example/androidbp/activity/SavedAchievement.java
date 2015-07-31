@@ -24,7 +24,7 @@ public class SavedAchievement extends ActionBarActivity {
     private TextView etSearch;
 
     ArrayList<String> listSaved;
-    Achievement[] listSavedAchievement;
+    AchievementViewHolder[] listSavedAchievement;
 
 
 
@@ -185,7 +185,7 @@ public class SavedAchievement extends ActionBarActivity {
 
         });
     }
-    public Achievement[] getSavedAchievement(){
+    public AchievementViewHolder[] getSavedAchievement(){
         //code back-end
 //        listSavedAchievement = input;
         return listSavedAchievement;
