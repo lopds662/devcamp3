@@ -21,9 +21,12 @@ import java.util.ArrayList;
 public class SavedAchievement extends ActionBarActivity {
 
     private ListView listView;
-    private EditText inputSearch;
-    ArrayList<String> listCompleted;
     private TextView etSearch;
+
+    ArrayList<String> listSaved;
+    Achievement[] listSavedAchievement;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +37,10 @@ public class SavedAchievement extends ActionBarActivity {
         listView = (ListView) findViewById(R.id.list);
 
         // Defined Array listCompleted to show in ListView
-        listCompleted = getListCompleted();
+        listSaved = getListSaved();
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, listCompleted);
+                android.R.layout.simple_list_item_1, android.R.id.text1, listSaved);
         // Assign adapter to ListView
         listView.setAdapter(adapter);
 
@@ -108,7 +111,7 @@ public class SavedAchievement extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    public ArrayList<String> getListCompleted(){
+    public ArrayList<String> getListSaved(){
         String[] list = new String[] { "Android List View",
                 "Adapter implementation",
                 "Simple List View In Android",
@@ -126,16 +129,21 @@ public class SavedAchievement extends ActionBarActivity {
                 "7",
                 "8"
         };
-        ArrayList<String> listCompleted = new ArrayList<>();
+        ArrayList<String> listSaved = new ArrayList<>();
         for(String i : list){
-            listCompleted.add(i);
+            listSaved.add(i);
         }
-        return listCompleted;
+
+        //Wait for back-end
+//        for(String i : listSavedAchievement.toString()){
+//            listSaved.add(i);
+//        }
+        
+        return listSaved;
     }
     public ArrayList<String> getListBySearch(String inputSearch) {
-
         ArrayList<String> listedBySearch = new ArrayList<>();
-        for (String i : listCompleted) {
+        for (String i : listSaved) {
             if ((i.toLowerCase()).startsWith(inputSearch.toLowerCase())) {
                 listedBySearch.add(i);
             }
@@ -148,10 +156,10 @@ public class SavedAchievement extends ActionBarActivity {
         listView = (ListView) findViewById(R.id.list);
 
         // Defined Array listCompleted to show in ListView
-        ArrayList<String> listCompleted = getListBySearch(etSearch.getText().toString());
+        ArrayList<String> listBySearch = getListBySearch(etSearch.getText().toString());
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, listCompleted);
+                android.R.layout.simple_list_item_1, android.R.id.text1, listBySearch);
         // Assign adapter to ListView
         listView.setAdapter(adapter);
 
@@ -176,5 +184,10 @@ public class SavedAchievement extends ActionBarActivity {
             }
 
         });
+    }
+    public Achievement[] getSavedAchievement(){
+        //code back-end
+//        listSavedAchievement = input;
+        return listSavedAchievement;
     }
 }
