@@ -13,5 +13,6 @@
     <string name="title_activity_completed">Completed Achievement</string>
     <string name="title_activity_logout">Logout</string>
     <string name="title_activity_saved_achievement">Saved Achievement</string>
-
+    <string name="title_activity_achievement_page">AchievementPage</string>
+    <string name="save_button">Save</string>
 </resources>

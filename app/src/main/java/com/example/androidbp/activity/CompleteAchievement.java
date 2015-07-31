@@ -119,22 +119,22 @@ public class CompleteAchievement extends ActionBarActivity {
                 new Achievement("Nam Tok Chet Sao Noi","Saraburi"),
                 new Achievement("Khun Malee Grape Farm","Saraburi"),
                 new Achievement("Papasara Grape Farm","Saraburi"),
-                new Achievement("�ǹͧ�����������ǹ�ͧ�������","Saraburi"),
+                new Achievement("ÊÇ¹Í§Øè¹ÀÙÍÁÃáÅÐäÇ¹ìÍ§Øè¹ÀÙÍÁÃ","Saraburi"),
                 new Achievement("Kamnan Meng Grape Farm","Saraburi"),
-                new Achievement("�����������","Saraburi"),
-                new Achievement("��觷ҹ���ѹ��ŧ�ѹ","Saraburi"),
+                new Achievement("ÍØâÁ§¤ìµé¹äÁé","Saraburi"),
+                new Achievement("·Øè§·Ò¹µÐÇÑ¹áÊÅ§¾Ñ¹","Saraburi"),
                 new Achievement("MuakLek ATV","Saraburi"),
-                new Achievement("Buddhist Temple �Ѵ��оط���� ","Saraburi"),
+                new Achievement("Buddhist Temple ÇÑ´¾ÃÐ¾Ø·¸©ÒÂ ","Saraburi"),
                 new Achievement("Wat Phra Phutthabat","Saraburi"),
-                new Achievement("�ٹ���֡�Ҹ����ҵ���з�ͧ������ԧ����ȹ��紤�-�觡�͹���","Saraburi"),
-                new Achievement("��ӵ��á�մ�","Saraburi"),
+                new Achievement("ÈÙ¹ÂìÈÖ¡ÉÒ¸ÃÃÁªÒµÔáÅÐ·èÍ§à·ÕèÂÇàªÔ§¹ÔàÇÈ¹ìà¨ç´¤µ-â»è§¡éÍ¹àÊÒ","Saraburi"),
+                new Achievement("¹éÓµ¡â¡Ã¡ÍÕ´¡","Saraburi"),
                 new Achievement("Pa Sak Cholasit ","Saraburi"),
                 new Achievement("Namtok Sam Lan National Park","Saraburi"),
                 new Achievement("laisakunahansa","Saraburi"),
                 new Achievement("Rai Kusuma Resort ","Saraburi"),
                 new Achievement("Wat Tham Phra Phothisat","Saraburi"),
-                new Achievement("�ǹ�ء��ҵ��ǡ����","Saraburi"),
-                new Achievement("��ҹ�������§���Թ �. ������","Saraburi"),
+                new Achievement("ÊÇ¹ÃØ¡¢ªÒµÔÁÇ¡àËÅç¡","Saraburi"),
+                new Achievement("ÃéÒ¹ÍÒËÒÃà¤ÕÂ§ÇÒÃÔ¹ Í. àÊÒäËé","Saraburi"),
                 new Achievement("Wat Pa Sawan Bun","Saraburi")
         };
         return list;
