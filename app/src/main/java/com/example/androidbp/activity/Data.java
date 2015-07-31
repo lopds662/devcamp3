@@ -14,6 +14,10 @@ public class Data {
         allAchievement = new ArrayList<Achievement>();
         completedAchievement =new ArrayList<Achievement>();
         saveAchievement =new ArrayList<Achievement>();
+
+        addAllAchievement();
+        addCompletedAchievement();
+        addSaveAchievement();
     }
 
     public void addAllAchievement(){
@@ -22,22 +26,22 @@ public class Data {
         allAchievement.add(new Achievement("Nam Tok Chet Sao Noi","Saraburi"));
         allAchievement.add(new Achievement("Khun Malee Grape Farm","Saraburi"));
         allAchievement.add(new Achievement("Papasara Grape Farm","Saraburi"));
-        allAchievement.add(new Achievement(" «πÕßÿËπ¿ŸÕ¡√·≈–‰«πÏÕßÿËπ¿ŸÕ¡√","Saraburi"));
+        allAchievement.add(new Achievement("‡∏™‡∏ß‡∏ô‡∏≠‡∏á‡∏∏‡πà‡∏ô‡∏†‡∏π‡∏≠‡∏°‡∏£‡πÅ‡∏•‡∏∞‡πÑ‡∏ß‡∏ô‡πå‡∏≠‡∏á‡∏∏‡πà‡∏ô‡∏†‡∏π‡∏≠‡∏°‡∏£","Saraburi"));
         allAchievement.add(new Achievement("Kamnan Meng Grape Farm","Saraburi"));
-        allAchievement.add(new Achievement("Õÿ‚¡ß§ÏµÈπ‰¡È","Saraburi"));
-        allAchievement.add(new Achievement("∑ÿËß∑“πµ–«—π· ≈ßæ—π","Saraburi"));
+        allAchievement.add(new Achievement("‡∏≠‡∏∏‡πÇ‡∏°‡∏á‡∏Ñ‡πå‡∏ï‡πâ‡∏ô‡πÑ‡∏°‡πâ","Saraburi"));
+        allAchievement.add(new Achievement("‡∏ó‡∏∏‡πà‡∏á‡∏ó‡∏≤‡∏ô‡∏ï‡∏∞‡∏ß‡∏±‡∏ô‡πÅ‡∏™‡∏•‡∏á‡∏û‡∏±‡∏ô","Saraburi"));
         allAchievement.add(new Achievement("MuakLek ATV","Saraburi"));
-        allAchievement.add(new Achievement("Buddhist Temple «—¥æ√–æÿ∑∏©“¬ ","Saraburi"));
+        allAchievement.add(new Achievement("Buddhist Temple ‡∏ß‡∏±‡∏î‡∏û‡∏£‡∏∞‡∏û‡∏∏‡∏ó‡∏ò‡∏â‡∏≤‡∏¢ ","Saraburi"));
         allAchievement.add(new Achievement("Wat Phra Phutthabat","Saraburi"));
-        allAchievement.add(new Achievement("»Ÿπ¬Ï»÷°…“∏√√¡™“µ‘·≈–∑ËÕß‡∑’Ë¬«‡™‘ßπ‘‡«»πÏ‡®Á¥§µ-‚ªËß°ÈÕπ‡ “","Saraburi"));
-        allAchievement.add(new Achievement("πÈ”µ°‚°√°Õ’¥°","Saraburi"));
+        allAchievement.add(new Achievement("‡∏®‡∏π‡∏ô‡∏¢‡πå‡∏®‡∏∂‡∏Å‡∏©‡∏≤‡∏ò‡∏£‡∏£‡∏°‡∏ä‡∏≤‡∏ï‡∏¥‡πÅ‡∏•‡∏∞‡∏ó‡πà‡∏≠‡∏á‡πÄ‡∏ó‡∏µ‡πà‡∏¢‡∏ß‡πÄ‡∏ä‡∏¥‡∏á‡∏ô‡∏¥‡πÄ‡∏ß‡∏®‡∏ô‡πå‡πÄ‡∏à‡πá‡∏î‡∏Ñ‡∏ï-‡πÇ‡∏õ‡πà‡∏á‡∏Å‡πâ‡∏≠‡∏ô‡πÄ‡∏™‡∏≤","Saraburi"));
+        allAchievement.add(new Achievement("‡∏ô‡πâ‡∏≥‡∏ï‡∏Å‡πÇ‡∏Å‡∏£‡∏Å‡∏≠‡∏µ‡∏î‡∏Å","Saraburi"));
         allAchievement.add(new Achievement("Pa Sak Cholasit ","Saraburi"));
         allAchievement.add(new Achievement("Namtok Sam Lan National Park","Saraburi"));
         allAchievement.add(new Achievement("laisakunahansa","Saraburi"));
         allAchievement.add(new Achievement("Rai Kusuma Resort ","Saraburi"));
         allAchievement.add(new Achievement("Wat Tham Phra Phothisat","Saraburi"));
-        allAchievement.add(new Achievement(" «π√ÿ°¢™“µ‘¡«°‡À≈Á°","Saraburi"));
-        allAchievement.add(new Achievement("√È“πÕ“À“√‡§’¬ß«“√‘π Õ. ‡ “‰ÀÈ","Saraburi"));
+        allAchievement.add(new Achievement("‡∏™‡∏ß‡∏ô‡∏£‡∏∏‡∏Å‡∏Ç‡∏ä‡∏≤‡∏ï‡∏¥‡∏°‡∏ß‡∏Å‡πÄ‡∏´‡∏•‡πá‡∏Å","Saraburi"));
+        allAchievement.add(new Achievement("‡∏£‡πâ‡∏≤‡∏ô‡∏≠‡∏≤‡∏´‡∏≤‡∏£‡πÄ‡∏Ñ‡∏µ‡∏¢‡∏á‡∏ß‡∏≤‡∏£‡∏¥‡∏ô ‡∏≠. ‡πÄ‡∏™‡∏≤‡πÑ‡∏´‡πâ","Saraburi"));
         allAchievement.add(new Achievement("Wat Pa Sawan Bun","Saraburi"));
 
     }
@@ -49,8 +53,8 @@ public class Data {
         saveAchievement.add(new Achievement("Khun Malee Grape Farm","Saraburi"));
         saveAchievement.add(new Achievement("Rai Kusuma Resort ","Saraburi"));
         saveAchievement.add(new Achievement("Wat Tham Phra Phothisat","Saraburi"));
-        saveAchievement.add(new Achievement(" «π√ÿ°¢™“µ‘¡«°‡À≈Á°","Saraburi"));
-        saveAchievement.add(new Achievement("√È“πÕ“À“√‡§’¬ß«“√‘π Õ. ‡ “‰ÀÈ","Saraburi"));
+        saveAchievement.add(new Achievement("‡∏™‡∏ß‡∏ô‡∏£‡∏∏‡∏Å‡∏Ç‡∏ä‡∏≤‡∏ï‡∏¥‡∏°‡∏ß‡∏Å‡πÄ‡∏´‡∏•‡πá‡∏Å","Saraburi"));
+        saveAchievement.add(new Achievement("‡∏£‡πâ‡∏≤‡∏ô‡∏≠‡∏≤‡∏´‡∏≤‡∏£‡πÄ‡∏Ñ‡∏µ‡∏¢‡∏á‡∏ß‡∏≤‡∏£‡∏¥‡∏ô ‡∏≠. ‡πÄ‡∏™‡∏≤‡πÑ‡∏´‡πâ","Saraburi"));
         saveAchievement.add(new Achievement("Wat Pa Sawan Bun","Saraburi"));
 
     }
@@ -61,12 +65,12 @@ public class Data {
         completedAchievement.add(new Achievement("Nam Tok Chet Sao Noi","Saraburi"));
         completedAchievement.add(new Achievement("Khun Malee Grape Farm","Saraburi"));
         completedAchievement.add(new Achievement("Papasara Grape Farm","Saraburi"));
-        completedAchievement.add(new Achievement(" «πÕßÿËπ¿ŸÕ¡√·≈–‰«πÏÕßÿËπ¿ŸÕ¡√","Saraburi"));
+        completedAchievement.add(new Achievement("‡∏™‡∏ß‡∏ô‡∏≠‡∏á‡∏∏‡πà‡∏ô‡∏†‡∏π‡∏≠‡∏°‡∏£‡πÅ‡∏•‡∏∞‡πÑ‡∏ß‡∏ô‡πå‡∏≠‡∏á‡∏∏‡πà‡∏ô‡∏†‡∏π‡∏≠‡∏°‡∏£","Saraburi"));
         completedAchievement.add(new Achievement("Kamnan Meng Grape Farm","Saraburi"));
-        completedAchievement.add(new Achievement("Õÿ‚¡ß§ÏµÈπ‰¡È","Saraburi"));
-        completedAchievement.add(new Achievement("∑ÿËß∑“πµ–«—π· ≈ßæ—π","Saraburi"));
+        completedAchievement.add(new Achievement("‡∏≠‡∏∏‡πÇ‡∏°‡∏á‡∏Ñ‡πå‡∏ï‡πâ‡∏ô‡πÑ‡∏°‡πâ","Saraburi"));
+        completedAchievement.add(new Achievement("‡∏ó‡∏∏‡πà‡∏á‡∏ó‡∏≤‡∏ô‡∏ï‡∏∞‡∏ß‡∏±‡∏ô‡πÅ‡∏™‡∏•‡∏á‡∏û‡∏±‡∏ô","Saraburi"));
         completedAchievement.add(new Achievement("MuakLek ATV","Saraburi"));
-        completedAchievement.add(new Achievement("Buddhist Temple «—¥æ√–æÿ∑∏©“¬ ","Saraburi"));
+        completedAchievement.add(new Achievement("Buddhist Temple ‡∏ß‡∏±‡∏î‡∏û‡∏£‡∏∞‡∏û‡∏∏‡∏ó‡∏ò‡∏â‡∏≤‡∏¢ ","Saraburi"));
         completedAchievement.add(new Achievement("Wat Phra Phutthabat","Saraburi"));
 
     }
