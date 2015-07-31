@@ -117,12 +117,11 @@ public class AddAchievement extends ActionBarActivity {
             startActivity(intent);
             Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(this, "Please input achievement!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter achievement!", Toast.LENGTH_SHORT).show();
         }
     }
 
     public void addAchievement(String achievement){
-
-
+        
     }
 }
