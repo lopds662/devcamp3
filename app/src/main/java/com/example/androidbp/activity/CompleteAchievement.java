@@ -61,7 +61,7 @@ public class CompleteAchievement extends ActionBarActivity {
 
                 // Show Alert
                 Toast.makeText(getApplicationContext(),
-                        "Position :"+itemPosition+"  ListItem : " +itemValue.getName() , Toast.LENGTH_LONG)
+                        "Position :"+itemPosition+"  ListItem : " +itemValue.getName() , Toast.LENGTH_SHORT)
                         .show();
 
             }
@@ -113,7 +113,8 @@ public class CompleteAchievement extends ActionBarActivity {
     }
 
     public Achievement[] getListAchieCom(){
-        Achievement[] list = new Achievement[]{new Achievement("Ban Ing Koaw","Saraburi")
+        Achievement[] list = new Achievement[]{new Achievement("Ban Ing Koaw","Saraburi"),
+                new Achievement("Kasetsart","Bankok")
 
         };
         return list;
