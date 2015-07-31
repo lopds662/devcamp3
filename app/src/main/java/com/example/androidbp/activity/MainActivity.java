@@ -1,33 +1,20 @@
 package com.example.androidbp.activity;
 
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.androidbp.R;
-import com.example.androidbp.api.Api;
-import com.example.androidbp.api.model.Repo;
 import com.example.androidbp.event.GithubRepoLoaded;
 import com.example.androidbp.manager.BusManager;
-import com.example.androidbp.manager.HttpManager;
 import com.google.android.gms.maps.MapFragment;
 import com.squareup.otto.Subscribe;
 
-import java.util.List;
-
-import butterknife.Bind;
 import butterknife.ButterKnife;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -92,7 +79,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sendMessage(View view){
-        Intent intent = new Intent(this, AddAchivement.class);
+//        Toast.makeText(this,"YES",Toast.LENGTH_LONG).show();
+
+        Intent intent = new Intent(this, AddAchievement.class);
         String message = "String Testing";
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);

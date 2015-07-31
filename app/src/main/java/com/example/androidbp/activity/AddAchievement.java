@@ -7,10 +7,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.androidbp.R;
 
-public class AddAchivement extends ActionBarActivity {
+public class AddAchievement extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,19 @@ public class AddAchivement extends ActionBarActivity {
 //        startActivityForResult(intent, 0);
     }
     public void onClickDone(){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        TextView textView = (TextView) findViewById(R.id.textAddAchievement);
+        String text = textView.getText().toString();
+        if (!text.equals("")) {
+            addAchievement(text);
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "Please input achievement!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void addAchievement(String achievement){
+
     }
 }

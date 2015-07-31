@@ -43,8 +43,8 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".activity.AddAchivement"
-            android:label="@string/title_activity_add_achivement"
+            android:name=".activity.AddAchievement"
+            android:label="@string/title_activity_add_achievement"
             android:parentActivityName=".activity.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
