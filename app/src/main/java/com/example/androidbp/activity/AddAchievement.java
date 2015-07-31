@@ -165,8 +165,9 @@ public class AddAchievement extends ActionBarActivity {
         String text = textView.getText().toString();
         if (!text.equals("")) {
             addAchievement(text);
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(this, MainActivity.class);
+//            startActivity(intent);
+            finish();
             Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(this, "Please enter achievement!", Toast.LENGTH_SHORT).show();

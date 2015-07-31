@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity
             buildGoogleApiClient();
         }
 
+        // Build Map Code.... .
         // Getting reference to the SupportMapFragment of activity_main.xml
         SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
@@ -197,6 +198,7 @@ public class MainActivity extends AppCompatActivity
                 Toast.LENGTH_LONG).show();
 
     }
+
     public void logOut(){
         Intent intent = new Intent(this, MainActivity.class);
         Toast.makeText(this, "Log out", Toast.LENGTH_SHORT).show();
@@ -284,9 +286,10 @@ public class MainActivity extends AppCompatActivity
     public void onLocationChanged(Location location) {
         mLastLocation = location;
         Toast.makeText(this,"Current >> " + "Latitude:" + mLastLocation.getLatitude()+
-                ", Longitude:"+mLastLocation.getLongitude(),Toast.LENGTH_LONG).show();
+                ", Longitude:" + mLastLocation.getLongitude(),Toast.LENGTH_LONG).show();
 
     }
+
     private void updateUI() {
         mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
         mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
@@ -303,5 +306,7 @@ public class MainActivity extends AppCompatActivity
                 mGoogleApiClient, this);
 
     }
+
+
 
 }
