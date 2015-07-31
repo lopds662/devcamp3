@@ -6,16 +6,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.androidbp.R;
 
+import java.util.ArrayList;
+
 public class CompleteAchievement extends ActionBarActivity {
 
     ListView listView;
-    String[] listCompleted;
     Achievement[] listAchieCom;
 
     @Override
@@ -60,6 +60,7 @@ public class CompleteAchievement extends ActionBarActivity {
                 Achievement  itemValue    = (Achievement) listView.getItemAtPosition(position);
 
                 // Show Alert
+
                 Toast.makeText(getApplicationContext(),
                         "Position :"+itemPosition+"  ListItem : " +itemValue.getName() , Toast.LENGTH_SHORT)
                         .show();
@@ -84,39 +85,27 @@ public class CompleteAchievement extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
 
-    public String[] getListCompleted(){
-        String[] listCompleted = new String[] { "Android List View",
-                "Adapter implementation",
-                "Simple List View In Android",
-                "Create List View Android",
-                "Android Example",
-                "List View Source Code",
-                "List View Array Adapter",
-                "Android Example List View",
-                "1" ,
-                "2",
-                "3",
-                "4",
-                "5",
-                "6",
-                "7",
-                "8"
-        };
-        return listCompleted;
+    public Achievement[] getListAchieCom(){
+        Data a = new Data();
+        Achievement[] list1 = new Achievement[Data.completedAchievement.size()];
+        Data.completedAchievement.toArray(list1);
+        return list1;
     }
 
-    public Achievement[] getListAchieCom(){
-        Achievement[] list = new Achievement[]{new Achievement("Ban Ing Koaw","Saraburi"),
-                new Achievement("Kasetsart","Bankok")
+    /**
+     * Get List CompleteAchievement from database.
+     * @return array of Achievement
+     */
+    public Achievement[] getListCompleteAchievement(){
 
-        };
-        return list;
+        return null;
+
     }
 }
