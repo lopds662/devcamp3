@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.androidbp.R;
 import com.example.androidbp.event.GithubRepoLoaded;
@@ -28,10 +29,12 @@ public class MainActivity extends AppCompatActivity {
         //Inject view id to above properties
         ButterKnife.bind(this);
 
+        //Google Maps api fragemnt
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.frameLayoutFragment, new MapFragment());
         ft.commit();
 
+        //Show icon on actionbar
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_launcher);
 
@@ -64,7 +67,12 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.com_ach) {
+        if (id == R.id.log_out) {
+            logOut();
+            return true;
+        }
+        if (id == R.id.saved_ach){
+            savedAchievement();
             return true;
         }
 
@@ -79,11 +87,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sendMessage(View view){
-//        Toast.makeText(this,"YES",Toast.LENGTH_LONG).show();
-
         Intent intent = new Intent(this, AddAchievement.class);
         String message = "String Testing";
         intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
+
+    }
+    public void logOut(){
+        Intent intent = new Intent(this, MainActivity.class);
+        Toast.makeText(this, "Log out", Toast.LENGTH_SHORT).show();
+    }
+    public void savedAchievement(){
+        Intent intent = new Intent(this, SavedAchievement.class);
         startActivity(intent);
 
     }
