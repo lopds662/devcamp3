@@ -24,6 +24,8 @@ import com.example.androidbp.api.model.CreateAchievementBody;
 import com.example.androidbp.api.model.ImageUploadResult;
 import com.example.androidbp.manager.HttpManager;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 
 import retrofit.Callback;
@@ -46,6 +48,24 @@ public class AddAchievement extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_achivement);
 
+        Bundle extras = getIntent().getExtras();
+        String value = "";
+        if (extras != null) {
+            value = extras.getString("address");
+        }
+        TextView textView = (TextView) findViewById(R.id.textView);
+        textView.setText(value);
+
+
+
+
+//        double lat = MainActivity.mLastLocation.getLatitude();
+//        double log = MainActivity.mLastLocation.getLongitude();
+//        Toast.makeText(this, "Lat "+String.valueOf(lat) + " Long "+String.valueOf(log), Toast.LENGTH_LONG).show();
+//
+//        String temp = "Lat > " + String.valueOf(lat) + "\nLong > " + String.valueOf(log);
+//        TextView textView = (TextView)findViewById(R.id.textView);
+//        textView.setText(temp);
 
 //        TextView textView = (TextView) findViewById(R.id.textView);
 //        String latitudeText = String.valueOf(MainActivity.mLastLocation.getLatitude());
