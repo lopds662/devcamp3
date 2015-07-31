@@ -45,7 +45,7 @@ public class AddAchivement extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.done) {
-
+            onClickDone();
             return true;
         }
 
@@ -57,5 +57,9 @@ public class AddAchivement extends ActionBarActivity {
         startActivity(intent);
 //        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
 //        startActivityForResult(intent, 0);
+    }
+    public void onClickDone(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }
