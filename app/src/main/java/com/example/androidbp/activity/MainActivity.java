@@ -3,6 +3,7 @@ package com.example.androidbp.activity;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.support.v7.app.AppCompatActivity;
@@ -20,17 +21,24 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.drive.Drive;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.otto.Subscribe;
 
 import java.text.BreakIterator;
 
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends AppCompatActivity
+        implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener
+        ,LocationListener{
+
 
     private static int REQUEST_CODE_RECOVER_PLAY_SERVICES = 200;
     public static final String EXTRA_MESSAGE = "ASFM PASMF";
@@ -39,8 +47,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public Location mLastLocation;
     private BreakIterator mLatitudeText;
     private BreakIterator mLongitudeText;
-    private GoogleMap mMap;
+    private GoogleMap googleMap;
     private LocationRequest mLocationRequest;
+    LatLng myPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +60,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         //Inject view id to above properties
         ButterKnife.bind(this);
 
-        //Google Maps api fragemnt
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.frameLayoutFragment, new MapFragment());
-        ft.commit();
+//        //Google Maps api fragemnt
+//        FragmentTransaction ft = getFragmentManager().beginTransaction();
+//        ft.replace(R.id.frameLayoutFragment, new MapFragment());
+//        ft.commit();
 
         //Show icon on actionbar
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -64,15 +73,48 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 .addApi(Drive.API)
                 .addScope(Drive.SCOPE_FILE)
                 .build();
-        createLocationRequest();
 
         if (checkGooglePlayServices()) {
             buildGoogleApiClient();
-            Toast.makeText(this, "GPS Good", Toast.LENGTH_LONG).show();
         }
 
-        Toast.makeText(this, "test connect", Toast.LENGTH_LONG).show();
+        // Getting reference to the SupportMapFragment of activity_main.xml
+        SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
+        // Getting GoogleMap object from the fragment
+        googleMap = fm.getMap();
+
+        // Enabling MyLocation Layer of Google Map
+        googleMap.setMyLocationEnabled(true);
+
+        // Getting LocationManager object from System Service LOCATION_SERVICE
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        // Creating a criteria object to retrieve provider
+        Criteria criteria = new Criteria();
+
+        // Getting the name of the best provider
+        String provider = locationManager.getBestProvider(criteria, true);
+
+        // Getting Current Location
+        Location location = locationManager.getLastKnownLocation(provider);
+
+        if(location!=null) {
+            // Getting latitude of the current location
+            double latitude = location.getLatitude();
+
+            // Getting longitude of the current location
+            double longitude = location.getLongitude();
+
+            // Creating a LatLng object for the current location
+            LatLng latLng = new LatLng(latitude, longitude);
+
+            myPosition = new LatLng(latitude, longitude);
+
+            googleMap.addMarker(new MarkerOptions().position(myPosition).title("Start"));
+
+
+        }
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -81,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
+
     }
 
     @Override
@@ -89,7 +132,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         BusManager.register(this);
         if (mGoogleApiClient != null) {
             mGoogleApiClient.connect();
-            Toast.makeText(this, "Onstart connect", Toast.LENGTH_LONG).show();
+
+//            Toast.makeText(this, "Onstart connect", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -145,13 +189,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public void addAchievement(View view){
         Intent intent = new Intent(this, AddAchievement.class);
         startActivity(intent);
+        startLocationUpdates();
 
-//        Log.d("abc", mGoogleApiClient.toString());
-//        Log.d("def", mLastLocation.toString());
-//
-//        mLastLocation.getLatitude();
-//        double log = mLastLocation.getLongitude();
-//        Toast.makeText(this, "TEXT", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,
+                "Latitude:" + mLastLocation.getLatitude()+
+                        ", Longitude:"+mLastLocation.getLongitude(),
+                Toast.LENGTH_LONG).show();
 
     }
     public void logOut(){
@@ -161,6 +204,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public void savedAchievement() {
         Intent intent = new Intent(this, SavedAchievement.class);
         startActivity(intent);
+
     }
 
     @Override
@@ -168,14 +212,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
         if (mLastLocation != null) {
-
+            createLocationRequest();
             Toast.makeText(this,
                     "Latitude:" + mLastLocation.getLatitude()+
                     ", Longitude:"+mLastLocation.getLongitude(),
                     Toast.LENGTH_LONG).show();
 
         }
-        Toast.makeText(this, "mLastLocation == null ;____;", Toast.LENGTH_LONG).show();
+
 
     }
 
@@ -232,4 +276,32 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         mLocationRequest.setFastestInterval(5000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
+
+    protected void startLocationUpdates() {
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+    }
+    @Override
+    public void onLocationChanged(Location location) {
+        mLastLocation = location;
+        Toast.makeText(this,"Current >> " + "Latitude:" + mLastLocation.getLatitude()+
+                ", Longitude:"+mLastLocation.getLongitude(),Toast.LENGTH_LONG).show();
+
+    }
+    private void updateUI() {
+        mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
+        mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopLocationUpdates();
+    }
+
+    protected void stopLocationUpdates() {
+        LocationServices.FusedLocationApi.removeLocationUpdates(
+                mGoogleApiClient, this);
+
+    }
+
 }
