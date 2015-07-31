@@ -1,14 +1,13 @@
 package com.example.androidbp.activity;
 
-import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
 import android.location.Criteria;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,14 +23,21 @@ import com.google.android.gms.drive.Drive;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.otto.Subscribe;
 
+import java.io.IOException;
 import java.text.BreakIterator;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import butterknife.ButterKnife;
 
@@ -43,13 +49,12 @@ public class MainActivity extends AppCompatActivity
     private static int REQUEST_CODE_RECOVER_PLAY_SERVICES = 200;
     public static final String EXTRA_MESSAGE = "ASFM PASMF";
 
-    GoogleApiClient mGoogleApiClient;
-    public Location mLastLocation;
-    private BreakIterator mLatitudeText;
-    private BreakIterator mLongitudeText;
-    private GoogleMap googleMap;
-    private LocationRequest mLocationRequest;
-    LatLng myPosition;
+    public GoogleApiClient mGoogleApiClient;
+    public static Location mLastLocation;
+    protected GoogleMap googleMap;
+    protected LocationRequest mLocationRequest;
+    protected LocationManager locationManager;
+    protected LatLng myPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +83,11 @@ public class MainActivity extends AppCompatActivity
             buildGoogleApiClient();
         }
 
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.connect();
+        }
+
+
         // Build Map Code.... .
         // Getting reference to the SupportMapFragment of activity_main.xml
         SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -89,7 +99,7 @@ public class MainActivity extends AppCompatActivity
         googleMap.setMyLocationEnabled(true);
 
         // Getting LocationManager object from System Service LOCATION_SERVICE
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         // Creating a criteria object to retrieve provider
         Criteria criteria = new Criteria();
@@ -114,7 +124,6 @@ public class MainActivity extends AppCompatActivity
 
             googleMap.addMarker(new MarkerOptions().position(myPosition).title("Start"));
 
-
         }
     }
 
@@ -133,8 +142,6 @@ public class MainActivity extends AppCompatActivity
         BusManager.register(this);
         if (mGoogleApiClient != null) {
             mGoogleApiClient.connect();
-
-//            Toast.makeText(this, "Onstart connect", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -170,8 +177,6 @@ public class MainActivity extends AppCompatActivity
             case (R.id.log_out):
                 logOut();
                 break;
-                
-
         }
 
         return super.onOptionsItemSelected(item);
@@ -188,8 +193,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void addAchievement(View view){
-        Intent intent = new Intent(this, AddAchievement.class);
-        startActivity(intent);
+//        Intent intent = new Intent(this, AddAchievement.class);
+//        startActivity(intent);
         startLocationUpdates();
 
         Toast.makeText(this,
@@ -197,12 +202,40 @@ public class MainActivity extends AppCompatActivity
                         ", Longitude:"+mLastLocation.getLongitude(),
                 Toast.LENGTH_LONG).show();
 
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        String addressText ="";
+        try {//14.726414, 101.188287
+            List<Address>  listA = geocoder.getFromLocation(mLastLocation.getLatitude(), mLastLocation.getLongitude(), 1);
+            ArrayList<String> addressGet = new ArrayList<>( );
+            addressGet.add(listA.get(0).getCountryName());
+            addressGet.add(listA.get(0).getAdminArea());
+            addressGet.add(listA.get(0).getSubAdminArea());
+            addressGet.add(listA.get(0).getThoroughfare());
+            addressGet.add(listA.get(0).getPostalCode());
+            for(int i=0; i<5; i++){
+                String temp = addressGet.get(i);
+                if(temp != null){
+                    addressText = addressText + temp + "  ";
+                }
+            }
+            addressText += "\n";
+        } catch (IOException e) {
+            e.printStackTrace();
+//            Toast.makeText(this, "Null", Toast.LENGTH_LONG).show();
+        }
+        Toast.makeText(this, "value in temp >>: " + addressText, Toast.LENGTH_LONG).show();
+
+        Intent i = new Intent(getApplicationContext(), AddAchievement.class);
+        i.putExtra("address",addressText);
+        startActivity(i);
+        //Log.d("ADDRESS", temp);
     }
 
     public void logOut(){
         Intent intent = new Intent(this, MainActivity.class);
         Toast.makeText(this, "Log out", Toast.LENGTH_SHORT).show();
     }
+
     public void savedAchievement() {
         Intent intent = new Intent(this, SavedAchievement.class);
         startActivity(intent);
@@ -215,13 +248,14 @@ public class MainActivity extends AppCompatActivity
                 mGoogleApiClient);
         if (mLastLocation != null) {
             createLocationRequest();
-            Toast.makeText(this,
-                    "Latitude:" + mLastLocation.getLatitude()+
-                    ", Longitude:"+mLastLocation.getLongitude(),
-                    Toast.LENGTH_LONG).show();
 
+            double latitude = mLastLocation.getLatitude();
+            double longitude = mLastLocation.getLongitude();
+            LatLng latLng = new LatLng(latitude, longitude);
+
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 10);
+            googleMap.animateCamera(cameraUpdate);
         }
-
 
     }
 
@@ -236,23 +270,13 @@ public class MainActivity extends AppCompatActivity
     }
 
     private boolean checkGooglePlayServices() {
-
         int checkGooglePlayServices = GooglePlayServicesUtil
                 .isGooglePlayServicesAvailable(this);
         if (checkGooglePlayServices != ConnectionResult.SUCCESS) {
-			/*
-			* google play services is missing or update is required
-			*  return code could be
-			* SUCCESS,
-			* SERVICE_MISSING, SERVICE_VERSION_UPDATE_REQUIRED,
-			* SERVICE_DISABLED, SERVICE_INVALID.
-			*/
             GooglePlayServicesUtil.getErrorDialog(checkGooglePlayServices,
                     this, REQUEST_CODE_RECOVER_PLAY_SERVICES).show();
-
             return false;
         }
-
         return true;
     }
     @Override
@@ -290,11 +314,6 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void updateUI() {
-        mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
-        mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
-    }
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -306,7 +325,4 @@ public class MainActivity extends AppCompatActivity
                 mGoogleApiClient, this);
 
     }
-
-
-
 }

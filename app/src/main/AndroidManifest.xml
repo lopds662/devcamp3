@@ -74,11 +74,15 @@
             android:label="@string/title_activity_achievement_page"
 
             android:parentActivityName=".activity.MainActivity" >
+            android:name=".FetchAddressIntentService"
+            android:exported="false"
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.androidbp.activity.MainActivity" />
         </activity>
+
+
     </application>
 
 </manifest>
