@@ -47,7 +47,9 @@
         <activity
             android:name=".activity.AddAchievement"
             android:label="@string/title_activity_add_achievement"
-            android:parentActivityName=".activity.MainActivity" >
+            android:parentActivityName=".activity.MainActivity"
+            android:screenOrientation="portrait" >
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.androidbp.activity.MainActivity" />
