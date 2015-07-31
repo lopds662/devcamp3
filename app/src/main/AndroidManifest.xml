@@ -52,7 +52,7 @@
         </activity>
         <activity
             android:name=".activity.CompleteAchievement"
-            android:label="@string/title_activity_complete_achievement"
+            android:label="@string/title_activity_add_achievement"
             android:parentActivityName=".activity.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
