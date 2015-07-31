@@ -20,7 +20,6 @@ import android.widget.Toast;
 import com.example.androidbp.R;
 
 import java.io.File;
-import java.io.IOException;
 
 public class AddAchievement extends ActionBarActivity {
 
@@ -29,6 +28,7 @@ public class AddAchievement extends ActionBarActivity {
     String captured_image;
     ImageButton imageButton;
     File file;
+    Bitmap bitmap;
     public static final int PICTURE_REQUEST_CODE = 200;
 
     @Override
@@ -103,7 +103,7 @@ public class AddAchievement extends ActionBarActivity {
 
 
         if(requestCode == PICTURE_REQUEST_CODE && resultCode == RESULT_OK) {
-            Log.d("getPath", fileUri.getPath());
+//            Log.d("getPath", fileUri.getPath());
 //            try {
 //                photo = MediaStore.Images.Media.getBitmap(this.getContentResolver(), fileUri);
 //            } catch (IOException e) {
@@ -111,7 +111,9 @@ public class AddAchievement extends ActionBarActivity {
 //            }
 
 //            imageButton.setImageBitmap(photo);
-            imageButton.setImageBitmap(decodeSampledBitmapFromFile(file.getAbsolutePath(), 1000, 500));
+
+            bitmap = decodeSampledBitmapFromFile(file.getAbsolutePath(), 1000, 500);
+            imageButton.setImageBitmap(bitmap);
 
         }
         super.onActivityResult(requestCode, resultCode, data);
