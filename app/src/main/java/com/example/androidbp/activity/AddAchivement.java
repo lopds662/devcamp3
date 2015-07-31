@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.androidbp.R;
 
@@ -60,6 +61,8 @@ public class AddAchivement extends ActionBarActivity {
     }
     public void onClickDone(){
         Intent intent = new Intent(this, MainActivity.class);
+        Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
         startActivity(intent);
+
     }
 }
