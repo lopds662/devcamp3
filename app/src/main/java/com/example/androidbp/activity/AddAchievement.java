@@ -18,10 +18,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.androidbp.R;
+import com.example.androidbp.api.Api;
+import com.example.androidbp.api.model.AchievementItem;
+import com.example.androidbp.api.model.CreateAchievementBody;
+import com.example.androidbp.api.model.ImageUploadResult;
+import com.example.androidbp.manager.HttpManager;
 
 import org.w3c.dom.Text;
 
 import java.io.File;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import retrofit.mime.TypedFile;
 
 public class AddAchievement extends ActionBarActivity {
 
@@ -194,7 +204,38 @@ public class AddAchievement extends ActionBarActivity {
         }
     }
 
-    public void addAchievement(String achievement){
-        
+    public void addAchievement(final String achievement){
+        TypedFile typedImage = new TypedFile("application/octet-stream", file);
+        HttpManager.ApiFor(Api.class).uploadImage(typedImage, new Callback<ImageUploadResult>() {
+            @Override
+            public void success(ImageUploadResult imageUploadResult, Response response) {
+                callHttpCreateAchievement(imageUploadResult.id, achievement);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e("GGG", error.getMessage());
+            }
+        });
+    }
+
+    private void callHttpCreateAchievement(String imageId, String achievement) {
+        CreateAchievementBody body = new CreateAchievementBody();
+        body.title = achievement;
+        body.latitude = 50.00f;
+        body.longitude = 40.00f;
+        body.image_id = imageId;
+        HttpManager.ApiFor(Api.class).createNewAchievement(body, new Callback<AchievementItem>() {
+            @Override
+            public void success(AchievementItem achievementItem, Response response) {
+                Log.d("GGG", String.valueOf(achievementItem));
+                Toast.makeText(AddAchievement.this, "Success", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e("GGG", error.getMessage());
+            }
+        });
     }
 }

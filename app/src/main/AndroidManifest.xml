@@ -63,7 +63,7 @@
                 android:value="com.example.androidbp.activity.MainActivity" />
         </activity>
         <activity
-            android:name=".activity.CompleteAchievement"
+            android:name=".activity.CompleteAchievementActivity"
             android:label="@string/title_activity_completed" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
