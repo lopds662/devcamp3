@@ -42,7 +42,7 @@ public class AchievementPage extends ActionBarActivity {
     @Bind(R.id.textView_creator)
     public TextView textView_cr;
 
-    public String idPost;
+    public static String idPost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,8 @@ public class AchievementPage extends ActionBarActivity {
         Map<String, String> params = new HashMap<String, String>();
         params.put("id", id);
         params.put("profile_id", profile_id);
-        HttpManager.ApiFor(Api.class).showDetail(params, new Callback<AchievementItem>() {
+
+        HttpManager.ApiFor(Api.class).showDetail(idPost, new Callback<AchievementItem>() {
             @Override
             public void success(AchievementItem achievementItem, Response response) {
                 Log.d("GGG", String.valueOf(achievementItem));
@@ -76,8 +77,9 @@ public class AchievementPage extends ActionBarActivity {
 
 //                TextView textView_ac = (TextView) findViewById(R.id.textView_achievement);
 //                TextView textView_cr = (TextView) findViewById(R.id.textView_creator);
-                textView_ac.setText(achievementItem.title);
-                textView_cr.setText(achievementItem.creator.name);
+//                textView_ac.setText(achievementItem.title);
+                textView_ac.setText("555");
+                textView_cr.setText(achievementItem.owner_profile.id);
 
 
                 Button completeButton = (Button) findViewById(R.id.completeButton);

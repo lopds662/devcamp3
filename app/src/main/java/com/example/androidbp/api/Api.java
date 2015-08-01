@@ -38,7 +38,7 @@ public interface Api {
     void uploadImage(@Part("file") TypedFile file, Callback<ImageUploadResult> cb);
 
     @GET("/post/detail")
-    void showDetail(@QueryMap Map<String, String> map, Callback<AchievementItem> cb);
+    void showDetail(@Query("id") String idPost, Callback<AchievementItem> cb);
 
     @GET("/post/nearby")
     void archievementNearby(@QueryMap Map<String, Float> m, Callback<List<ArchivementFeedItem>> cb);
