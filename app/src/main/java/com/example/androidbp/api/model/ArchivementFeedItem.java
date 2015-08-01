@@ -8,5 +8,8 @@ public class ArchivementFeedItem {
     public Float latitude, longitude;
     public Boolean saved, succeeded;
 
+
     public String getTitle(){return title;}
+    public Profile owner_profile;
+
 }

@@ -1,5 +1,6 @@
 package com.example.androidbp.activity;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +28,7 @@ public class AchievementViewHolder extends RecyclerView.ViewHolder {
 
     @Bind(R.id.viewImage)
     public ImageView image;
+    private ArchivementFeedItem model;
 
     public AchievementViewHolder(final View itemView) {
         super(itemView);
@@ -36,15 +38,23 @@ public class AchievementViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 Toast.makeText(itemView.getContext(), "555",Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(v.getContext(), AchievementPage.class);
+                intent.putExtra("id", model.id);
+                v.getContext().startActivity(intent);
             }
         });
     }
 
     public void bindData(ArchivementFeedItem item) {
+        model = item;
         title.setText(item.title);
         location.setText("lat: "+item.latitude+" lng: "+item.longitude);
-        Log.d("GGG", "Loading image url:" + item.image_url);
+        Log.d("CCC", "Loading image url:" + item.image_url);
         Picasso.with(this.itemView.getContext()).load(item.image_url).placeholder(R.drawable.ic_media_play).into(image);
+    }
+    public View getItemView(){
+        return this.itemView;
     }
 
 
