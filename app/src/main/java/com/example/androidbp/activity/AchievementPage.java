@@ -17,6 +17,7 @@ import com.example.androidbp.api.model.AchievementItem;
 import com.example.androidbp.api.model.CreateAchievementBody;
 import com.example.androidbp.api.model.ImageUploadResult;
 import com.example.androidbp.manager.HttpManager;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,8 +43,6 @@ public class AchievementPage extends ActionBarActivity {
     @Bind(R.id.textView_creator)
     public TextView textView_cr;
 
-    public static String idPost;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,39 +51,47 @@ public class AchievementPage extends ActionBarActivity {
         ButterKnife.bind(this);
 
         String id = "";
-        String profile_id = "";
+        String profileId = "0a776aa7-6073-4998-8802-b4ee79ff5d2a";
 
         // get id's from MainActivity
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             id = extras.getString("id");
-            profile_id = extras.getString("profile_id");
+//            profileId = extras.getString("profile_id");
         }
 
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("id", id);
-        params.put("profile_id", profile_id);
+        Log.d("GGG", "Getting Achievement for id:" + id + " and for profile id:" + profileId);
 
-        HttpManager.ApiFor(Api.class).showDetail(idPost, new Callback<AchievementItem>() {
+//        Map<String, String> params = new HashMap<String, String>();
+//        params.put("id", id);
+//        params.put("profile_id", profileId);
+
+        HttpManager.ApiFor(Api.class).showDetail(id, profileId, new Callback<AchievementItem>() {
             @Override
             public void success(AchievementItem achievementItem, Response response) {
-                Log.d("GGG", String.valueOf(achievementItem));
-                // convert url to bitmap
+                Log.d("GGG", "Detail Success:" + String.valueOf(achievementItem));
+                // conver
+                // ]t url to bitmap
                 // ac = achievementItem.image_url
                 // cr = achievementItem.creator.avatar_image_url
-                imageView_ac.setImageBitmap(null);
-                imageView_cr.setImageBitmap(null);
+//                imageView_ac.setImageBitmap(null);
+                Picasso.with(imageView_ac.getContext()).load(achievementItem.image_url).placeholder(R.drawable.ic_media_play).into(imageView_ac);
+                Log.d("CCC",achievementItem.image_url);
+//                imageView_cr.setImageBitmap(null);
+                Picasso.with(imageView_cr.getContext()).load(achievementItem.owner_profile.profile_image).placeholder(R.drawable.ic_media_play).into(imageView_cr);
 
 //                TextView textView_ac = (TextView) findViewById(R.id.textView_achievement);
 //                TextView textView_cr = (TextView) findViewById(R.id.textView_creator);
 //                textView_ac.setText(achievementItem.title);
-                textView_ac.setText("555");
-                textView_cr.setText(achievementItem.owner_profile.id);
+                textView_ac.setText(achievementItem.title);
+                textView_cr.setText(achievementItem.owner_profile.name);
+//                Log.d("GGG", "succ");
 
 
                 Button completeButton = (Button) findViewById(R.id.completeButton);
 
-                if (achievementItem.succeeded) {
+                if (achievementItem.succeeded != null && achievementItem.succeeded == true) {
+
                     completeButton.setText("Completed");
                     completeButton.setEnabled(false);
                 }
@@ -92,7 +99,8 @@ public class AchievementPage extends ActionBarActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                Log.e("GGG", error.getMessage());
+                Log.e("GGG", "Detail Error:" + error.getMessage());
+                error.printStackTrace();
             }
         });
     }

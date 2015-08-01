@@ -41,11 +41,15 @@ public interface Api {
     void uploadImage(@Part("file") TypedFile file, Callback<ImageUploadResult> cb);
 
     @GET("/post/detail")
-    void showDetail(@Query("id") String idPost, Callback<AchievementItem> cb);
+    void showDetail(@Query("id") String idPost, @Query("profile_id") String profileId, Callback<AchievementItem> cb);
 
     @GET("/post/nearby")
     void archievementNearby(@QueryMap Map<String, Float> m, Callback<List<ArchivementFeedItem>> cb);
 
     @GET("/profile/complete_post")
     void archivementComplete(@Query("profile_id") String profileId, Callback<List<ArchivementFeedItem>> cb);
+
+    @GET("/profile/save_post")
+    void archievementSaved(@Query("profile_id") String profileId, Callback<List<ArchivementFeedItem>> cb);
+
 }
