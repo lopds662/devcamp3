@@ -36,9 +36,9 @@ public class AchievementViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 Toast.makeText(itemView.getContext(), "555",Toast.LENGTH_SHORT).show();
-                AchievementPage.idPost=model.id;
-                Intent intent = new Intent(v.getContext(), AchievementPage.class);
 
+                Intent intent = new Intent(v.getContext(), AchievementPage.class);
+                intent.putExtra("id", model.id);
                 v.getContext().startActivity(intent);
             }
         });
@@ -48,8 +48,11 @@ public class AchievementViewHolder extends RecyclerView.ViewHolder {
         model = item;
         title.setText(item.title);
         location.setText("lat: "+item.latitude+" lng: "+item.longitude);
-        Log.d("GGG", "Loading image url:" + item.image_url);
+        Log.d("CCC", "Loading image url:" + item.image_url);
         Picasso.with(this.itemView.getContext()).load(item.image_url).placeholder(R.drawable.ic_media_play).into(image);
+    }
+    public View getItemView(){
+        return this.itemView;
     }
 
 
