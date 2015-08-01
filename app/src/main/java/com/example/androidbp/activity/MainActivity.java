@@ -17,8 +17,11 @@ import android.widget.ListPopupWindow;
 import android.widget.Toast;
 
 import com.example.androidbp.R;
+import com.example.androidbp.api.Api;
+import com.example.androidbp.api.model.ArchivementFeedItem;
 import com.example.androidbp.event.GithubRepoLoaded;
 import com.example.androidbp.manager.BusManager;
+import com.example.androidbp.manager.HttpManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -43,6 +46,9 @@ import java.util.List;
 import java.util.Locale;
 
 import butterknife.ButterKnife;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class MainActivity extends AppCompatActivity
         implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener
@@ -173,6 +179,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
     protected void onStop() {
         BusManager.unregister(this);
         super.onStop();
@@ -241,7 +252,6 @@ public class MainActivity extends AppCompatActivity
     public void addAchievement(View view) {
 //        Intent intent = new Intent(this, AddAchievement.class);
 //        startActivity(intent);
-        startLocationUpdates();
 
         Toast.makeText(this,
                 "Latitude:" + mLastLocation.getLatitude() +
@@ -281,6 +291,8 @@ public class MainActivity extends AppCompatActivity
 
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 10);
             googleMap.animateCamera(cameraUpdate);
+
+            startLocationUpdates();
         }
 
     }
@@ -326,8 +338,8 @@ public class MainActivity extends AppCompatActivity
 
     protected void createLocationRequest() {
         mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(20000);
-        mLocationRequest.setFastestInterval(5000);
+        mLocationRequest.setInterval(5000);
+        mLocationRequest.setFastestInterval(1000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
@@ -338,15 +350,35 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onLocationChanged(Location location) {
         mLastLocation = location;
-        Toast.makeText(this, "Current >> " + "Latitude:" + mLastLocation.getLatitude() +
-                ", Longitude:" + mLastLocation.getLongitude(), Toast.LENGTH_LONG).show();
+        Log.d("GGG", "Current >> " + "Latitude:" + mLastLocation.getLatitude() +
+                ", Longitude:" + mLastLocation.getLongitude());
 
+        updateNearbyAchievementList(location.getLatitude(), location.getLongitude());
+    }
+
+    private void updateNearbyAchievementList(double lat, double lng) {
+        HttpManager.ApiFor(Api.class).achievementNearby(lat, lng, 400000000, new Callback<List<ArchivementFeedItem>>() {
+            @Override
+            public void success(List<ArchivementFeedItem> archivementFeedItems, Response response) {
+                Log.d("GGG", "nearby succeed:" + archivementFeedItems.toString());
+
+                googleMap.clear();
+                for(ArchivementFeedItem item : archivementFeedItems) {
+                    LatLng latLng = new LatLng(item.latitude, item.longitude);
+                    googleMap.addMarker(new MarkerOptions().position(latLng).title(item.title));
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e("GGG", "Failed to get nearby location due to: " + error.getMessage());
+            }
+        });
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        stopLocationUpdates();
     }
 
     protected void stopLocationUpdates() {
