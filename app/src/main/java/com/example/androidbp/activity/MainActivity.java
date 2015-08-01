@@ -95,6 +95,8 @@ public class MainActivity extends AppCompatActivity
         // Getting GoogleMap object from the fragment
         googleMap = fm.getMap();
 
+        googleMap.getUiSettings().setScrollGesturesEnabled(true);
+
         // Enabling MyLocation Layer of Google Map
         googleMap.setMyLocationEnabled(true);
 
