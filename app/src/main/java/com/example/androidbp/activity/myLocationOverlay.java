@@ -11,5 +11,5 @@ import com.google.android.gms.maps.model.GroundOverlay;
 /**
  * Created by Administrator on 1/8/2558.
  */
-public class myLocationOverlay {
+public class myLocationOverlay {}
 
