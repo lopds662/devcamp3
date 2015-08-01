@@ -23,6 +23,7 @@ import com.example.androidbp.event.GithubRepoLoaded;
 import com.example.androidbp.manager.BusManager;
 import com.example.androidbp.manager.HttpManager;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.drive.Drive;
@@ -32,9 +33,11 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -71,6 +74,7 @@ public class MainActivity extends AppCompatActivity
     protected LocationRequest mLocationRequest;
     protected LocationManager locationManager;
     protected LatLng myPosition;
+    protected CameraPosition cameraPosition;
 
     private HashMap<String, ArchivementFeedItem> markerData = new HashMap<>();
 
@@ -194,6 +198,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        if (cameraPosition != null) {
+            googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            cameraPosition = null;
+        }
     }
 
     @Override
@@ -303,7 +311,7 @@ public class MainActivity extends AppCompatActivity
             double longitude = mLastLocation.getLongitude();
             LatLng latLng = new LatLng(latitude, longitude);
 
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 20);
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 19);
             googleMap.animateCamera(cameraUpdate);
 
             startLocationUpdates();
@@ -386,8 +394,7 @@ public class MainActivity extends AppCompatActivity
                     float color = BitmapDescriptorFactory.HUE_ORANGE;
                     if (item.succeeded) {
                         color = BitmapDescriptorFactory.HUE_GREEN;
-                    }
-                    else if (item.saved) {
+                    } else if (item.saved) {
                         color = BitmapDescriptorFactory.HUE_BLUE;
                     }
                     m.icon(BitmapDescriptorFactory.defaultMarker(color));
@@ -408,7 +415,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onPause() {
         super.onPause();
+        cameraPosition = googleMap.getCameraPosition();
+
     }
+
 
     protected void stopLocationUpdates() {
         LocationServices.FusedLocationApi.removeLocationUpdates(
@@ -421,7 +431,7 @@ public class MainActivity extends AppCompatActivity
         // This a sample dat to fill our ListView
         // find pic, name, last name to be correctly put
         ArrayList<DataItem> personItem = new ArrayList<DataItem>();
-        personItem.add(new DataItem(R.drawable.ic_add_white_24dp, "NAME", "@USERNAME"));
+        personItem.add(new DataItem(R.drawable.ic_add_white_24dp, "กางทาง", "@DevCamp#3"));
         personItem.add(new DataItem(0, com_arc, ""));
         personItem.add(new DataItem(0, sav_arc, ""));
         personItem.add(new DataItem(0, log_out, ""));
@@ -439,7 +449,7 @@ public class MainActivity extends AppCompatActivity
         // Setting this enables window to be dismissed by click outside ListPopupWindow
         pop.setModal(true);
         // Sets the width of the ListPopupWindow
-        pop.setContentWidth(370);
+        pop.setContentWidth(600);
         // Sets the Height of the ListPopupWindow
         pop.setHeight(ListPopupWindow.WRAP_CONTENT);
         // Set up a click listener for the ListView items
@@ -464,5 +474,4 @@ public class MainActivity extends AppCompatActivity
         });
         pop.show();
     }
-
 }

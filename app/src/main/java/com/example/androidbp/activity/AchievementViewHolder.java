@@ -41,6 +41,7 @@ public class AchievementViewHolder extends RecyclerView.ViewHolder {
 
                 Intent intent = new Intent(v.getContext(), AchievementPage.class);
                 intent.putExtra("id", model.id);
+                intent.putExtra("homeState", "Complete");
                 v.getContext().startActivity(intent);
             }
         });

@@ -1,5 +1,6 @@
 package com.example.androidbp.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -46,6 +47,7 @@ public class AchievementPage extends ActionBarActivity {
     public static String profileId;
     public static double lat;
     public static double lng;
+    protected String checkHome="";
 
 
     @Override
@@ -67,6 +69,7 @@ public class AchievementPage extends ActionBarActivity {
             profileId = extras.getString("profile_id");
             lat = extras.getFloat("lat");
             lng = extras.getFloat("lng");
+            checkHome = extras.getString("homeState");
         }
 
         Log.d("GGG", "Getting Achievement for id:" + id + " and for profile id:" + profileId);
@@ -193,5 +196,6 @@ public class AchievementPage extends ActionBarActivity {
             }
         });
     }
+
 }
 
