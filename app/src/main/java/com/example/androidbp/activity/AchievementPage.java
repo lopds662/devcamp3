@@ -1,8 +1,8 @@
 package com.example.androidbp.activity;
 
+import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,21 +15,14 @@ import android.widget.Toast;
 import com.example.androidbp.R;
 import com.example.androidbp.api.Api;
 import com.example.androidbp.api.model.AchievementItem;
-import com.example.androidbp.api.model.ArchivementFeedItem;
-import com.example.androidbp.api.model.CreateAchievementBody;
-import com.example.androidbp.api.model.ImageUploadResult;
 import com.example.androidbp.manager.HttpManager;
 import com.squareup.picasso.Picasso;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import retrofit.mime.TypedFile;
 
 public class AchievementPage extends ActionBarActivity {
 
@@ -45,11 +38,14 @@ public class AchievementPage extends ActionBarActivity {
     @Bind(R.id.textView_creator)
     public TextView textView_cr;
 
+    @Bind(R.id.completeButton)
+    public Button completeBt;
+
 
     public static String id;
     public static String profileId;
-    public static float lat;
-    public static float lng;
+    public static double lat;
+    public static double lng;
 
 
     @Override
@@ -105,7 +101,11 @@ public class AchievementPage extends ActionBarActivity {
                 if (achievementItem.succeeded != null && achievementItem.succeeded == true) {
 
                     completeButton.setText("Completed");
+                    completeBt.setBackgroundColor(Color.parseColor("#CCFFCC"));
                     completeButton.setEnabled(false);
+                }else{
+                    completeBt.setEnabled(true);
+                    completeBt.setBackgroundColor(Color.parseColor("#66FF66"));
                 }
 
                 completeButton.setOnClickListener(new View.OnClickListener() {
@@ -149,19 +149,20 @@ public class AchievementPage extends ActionBarActivity {
 
 
     private void onClickSave() {
-        TextView textView = (TextView) findViewById(R.id.textAddAchievement);
+        TextView textView = (TextView) findViewById(R.id.textView_achievement);
         String text = textView.getText().toString();
-        String profileId = "37c6f4fa-c175-4410-8679-7964293412b6";
 
-        HttpManager.ApiFor(Api.class).saveArchievement(profileId,id, new Callback<AchievementItem>() {
+        HttpManager.ApiFor(Api.class).saveArchievement(profileId, id, "", new Callback<Object>() {
             @Override
-            public void success(AchievementItem achievementItem, Response response) {
+            public void success(Object objects, Response response) {
+                Log.d("AAA", "Loaded" + String.valueOf(objects));
                 Toast.makeText(null, "Saved", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void failure(RetrofitError error) {
-
+                Log.d("AAA", "Loaded" + String.valueOf(error));
+//                Toast.makeText(null, "Error Saving ", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -171,21 +172,24 @@ public class AchievementPage extends ActionBarActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            lat = extras.getFloat("lat");
-            lng = extras.getFloat("lng");
+            lat = extras.getDouble("latitude");
+            lng = extras.getDouble("longitude");
         }
 
-        HttpManager.ApiFor(Api.class).completeArchievement(profileId, id, lat, lng, new Callback<Object>() {
+        Log.d("GGG", "completing achievement id:" + id + " with lat:" + lat + " lng:" + lng + " for profile id:" + profileId);
+        HttpManager.ApiFor(Api.class).completeArchievement(profileId, id, lat, lng, "", new Callback<Object>() {
             @Override
             public void success(Object obj, Response response) {
                 Log.d("GGG", "Loaded" + String.valueOf(obj));
+                completeBt.setEnabled(false);
+                completeBt.setBackgroundColor(Color.parseColor("#CCFFCC"));
                 Toast.makeText(null, "Successfully completing Achievement", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Log.d("GGG", "Error" + error.getMessage());
-                Toast.makeText(null, "Error completing Achievement", Toast.LENGTH_LONG).show();
+//                Toast.makeText(null, "Error completing Achievement", Toast.LENGTH_LONG).show();
             }
         });
     }

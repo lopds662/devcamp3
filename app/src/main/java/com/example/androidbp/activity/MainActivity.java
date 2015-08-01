@@ -155,7 +155,13 @@ public class MainActivity extends AppCompatActivity
                 // get the post's id & profile's id ???????
 //                i.putExtra("profile_id", "");
                 ArchivementFeedItem item = markerData.get(marker.getId());
+
+                double lat = mLastLocation.getLatitude();
+                double log = mLastLocation.getLongitude();
+
                 i.putExtra("id", item.id);
+                i.putExtra("latitude", lat);
+                i.putExtra("longitude", log);
 //                i.putExtra("profile_id", "");
                 startActivity(i);
                 return true;
@@ -368,7 +374,7 @@ public class MainActivity extends AppCompatActivity
                 Log.d("GGG", "nearby succeed:" + archivementFeedItems.toString());
 
                 googleMap.clear();
-                for(ArchivementFeedItem item : archivementFeedItems) {
+                for (ArchivementFeedItem item : archivementFeedItems) {
                     LatLng latLng = new LatLng(item.latitude, item.longitude);
                     Marker marker = googleMap.addMarker(new MarkerOptions().position(latLng).title(item.title));
                     markerData.put(marker.getId(), item);

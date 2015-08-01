@@ -50,14 +50,14 @@ public interface Api {
     void archivementComplete(@Query("profile_id") String profileId, Callback<List<ArchivementFeedItem>> cb);
 
     @POST("/profile/complete_post")
-    void completeArchievement(@Query("profile_id") String profile_id, @Query("id") String post_id, @Query("lat") double lat, @Query("lng") double lng, Callback<Object> cb);
+    void completeArchievement(@Query("profile_id") String profile_id, @Query("id") String post_id, @Query("lat") double lat, @Query("lng") double lng, @Body String body, Callback<Object> cb);
 
     @GET("/profile/save_post")
     void archievementSaved(@Query("profile_id") String profileId, Callback<List<ArchivementFeedItem>> cb);
 
 
     @POST("/profile/save_post")
-    void saveArchievement(@Query("profile_id") String profileId,@Query("id") String id,Callback<AchievementItem> cb );
+    void saveArchievement(@Query("profile_id") String profileId,@Query("id") String id, @Body String body, Callback<Object> cb );
 
 
 }
