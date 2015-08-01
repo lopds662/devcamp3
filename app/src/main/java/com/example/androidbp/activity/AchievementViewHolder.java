@@ -22,8 +22,10 @@ public class AchievementViewHolder extends RecyclerView.ViewHolder {
 
     @Bind(R.id.archeivement_title)
     public TextView title;
+
     @Bind(R.id.achievementLocation)
     public TextView location;
+
     @Bind(R.id.viewImage)
     public ImageView image;
     private ArchivementFeedItem model;

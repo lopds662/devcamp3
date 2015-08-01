@@ -30,6 +30,9 @@ public interface Api {
     @GET("/post/feed")
     void archivementFeed(Callback<List<ArchivementFeedItem>> cb);
 
+    @GET("/post/nearby")
+    void achievementNearby(@Query("lat") double lat, @Query("lng") double lng, @Query("distance") int distance, Callback<List<ArchivementFeedItem>> cb);
+
     @POST("/post/add_post")
     void createNewAchievement(@Query("profile_id") String profileId, @Body CreateAchievementBody body, Callback<AchievementItem> cb);
 
@@ -45,4 +48,8 @@ public interface Api {
 
     @GET("/profile/complete_post")
     void archivementComplete(@Query("profile_id") String profileId, Callback<List<ArchivementFeedItem>> cb);
+
+    @GET("/profile/save_post")
+    void archievementSaved(@Query("profile_id") String profileId, Callback<List<ArchivementFeedItem>> cb);
+
 }
