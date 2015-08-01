@@ -31,7 +31,7 @@ public interface Api {
     void archivementFeed(Callback<List<ArchivementFeedItem>> cb);
 
     @GET("/post/nearby")
-    void achievementNearby(@Query("lat") double lat, @Query("lng") double lng, @Query("distance") int distance, Callback<List<ArchivementFeedItem>> cb);
+    void achievementNearby(@Query("lat") double lat, @Query("lng") double lng, @Query("distance") int distance, @Query("profile_id") String profileId, Callback<List<ArchivementFeedItem>> cb);
 
     @POST("/post/add_post")
     void createNewAchievement(@Query("profile_id") String profileId, @Body CreateAchievementBody body, Callback<AchievementItem> cb);

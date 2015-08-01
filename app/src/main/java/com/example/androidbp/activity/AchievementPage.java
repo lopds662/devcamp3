@@ -56,7 +56,7 @@ public class AchievementPage extends ActionBarActivity {
         ButterKnife.bind(this);
 
         id = "";
-        profileId = "0a776aa7-6073-4998-8802-b4ee79ff5d2a";
+        profileId = "";
         lat = 0.0f;
         lng = 0.0f;
 
@@ -64,7 +64,7 @@ public class AchievementPage extends ActionBarActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             id = extras.getString("id");
-//            profileId = extras.getString("profile_id");
+            profileId = extras.getString("profile_id");
             lat = extras.getFloat("lat");
             lng = extras.getFloat("lng");
         }

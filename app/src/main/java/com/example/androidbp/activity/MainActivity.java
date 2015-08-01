@@ -63,6 +63,8 @@ public class MainActivity extends AppCompatActivity
     public static final String sav_arc = "Saved Archievements";
     public static final String log_out = "Log out";
 
+    public static final String profileId = "0a776aa7-6073-4998-8802-b4ee79ff5d2a";
+
     public GoogleApiClient mGoogleApiClient;
     public static Location mLastLocation;
     protected GoogleMap googleMap;
@@ -153,8 +155,6 @@ public class MainActivity extends AppCompatActivity
             @Override
             public boolean onMarkerClick(Marker marker) {
                 Intent i = new Intent(getApplicationContext(), AchievementPage.class);
-                // get the post's id & profile's id ???????
-//                i.putExtra("profile_id", "");
                 ArchivementFeedItem item = markerData.get(marker.getId());
 
                 double lat = mLastLocation.getLatitude();
@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity
                 i.putExtra("id", item.id);
                 i.putExtra("latitude", lat);
                 i.putExtra("longitude", log);
-//                i.putExtra("profile_id", "");
+                i.putExtra("profile_id", profileId);
                 startActivity(i);
                 return true;
             }
@@ -275,6 +275,7 @@ public class MainActivity extends AppCompatActivity
         Intent i = new Intent(getApplicationContext(), AddAchievement.class);
         i.putExtra("latitude", lat);
         i.putExtra("longitude", log);
+        i.putExtra("profile_id", profileId);
         startActivity(i);
         //Log.d("ADDRESS", temp);
     }
@@ -369,7 +370,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void updateNearbyAchievementList(double lat, double lng) {
-        HttpManager.ApiFor(Api.class).achievementNearby(lat, lng, 400000000, new Callback<List<ArchivementFeedItem>>() {
+        HttpManager.ApiFor(Api.class).achievementNearby(lat, lng, 400000000, profileId, new Callback<List<ArchivementFeedItem>>() {
             @Override
             public void success(List<ArchivementFeedItem> archivementFeedItems, Response response) {
                 Log.d("GGG", "nearby succeed:" + archivementFeedItems.toString());

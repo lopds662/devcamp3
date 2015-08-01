@@ -259,7 +259,12 @@ public class AddAchievement extends ActionBarActivity {
         body.latitude = (float)latitude;
         body.longitude = (float)longitude;
         body.image_id = imageId;
-        String profileId = "37c6f4fa-c175-4410-8679-7964293412b6"; //TODO: change to current profile id
+        String profileId = "";
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            profileId = extras.getString("profile_id");
+        }
+//        String profileId = "37c6f4fa-c175-4410-8679-7964293412b6"; //TODO: change to current profile id
         HttpManager.ApiFor(Api.class).createNewAchievement(profileId, body, new Callback<AchievementItem>() {
             @Override
             public void success(AchievementItem achievementItem, Response response) {
