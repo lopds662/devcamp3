@@ -45,4 +45,8 @@ public interface Api {
 
     @GET("/profile/complete_post")
     void archivementComplete(@Query("profile_id") String profileId, Callback<List<ArchivementFeedItem>> cb);
+
+    @GET("/profile/save_post")
+    void archievementSaved(@Query("profile_id") String profileId, Callback<List<ArchivementFeedItem>> cb);
+
 }
