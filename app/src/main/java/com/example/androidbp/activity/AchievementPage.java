@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.androidbp.R;
 import com.example.androidbp.api.Api;
 import com.example.androidbp.api.model.AchievementItem;
+import com.example.androidbp.api.model.ArchivementFeedItem;
 import com.example.androidbp.api.model.CreateAchievementBody;
 import com.example.androidbp.api.model.ImageUploadResult;
 import com.example.androidbp.manager.HttpManager;
@@ -42,6 +43,7 @@ public class AchievementPage extends ActionBarActivity {
 
     @Bind(R.id.textView_creator)
     public TextView textView_cr;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +78,7 @@ public class AchievementPage extends ActionBarActivity {
                 // cr = achievementItem.creator.avatar_image_url
 //                imageView_ac.setImageBitmap(null);
                 Picasso.with(imageView_ac.getContext()).load(achievementItem.image_url).placeholder(R.drawable.ic_media_play).into(imageView_ac);
-                Log.d("CCC",achievementItem.image_url);
+                Log.d("CCC", achievementItem.image_url);
 //                imageView_cr.setImageBitmap(null);
                 Picasso.with(imageView_cr.getContext()).load(achievementItem.owner_profile.profile_image).placeholder(R.drawable.ic_media_play).into(imageView_cr);
 
@@ -120,10 +122,29 @@ public class AchievementPage extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
+        if (id == R.id.saveButton) {
+            onClickSave();
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void onClickSave() {
+        TextView textView = (TextView) findViewById(R.id.textAddAchievement);
+        String text = textView.getText().toString();
+        String profileId = "37c6f4fa-c175-4410-8679-7964293412b6";
+
+        HttpManager.ApiFor(Api.class).saveArchievement(profileId,id, new Callback<AchievementItem>() {
+            @Override
+            public void success(AchievementItem achievementItem, Response response) {
+                Toast.makeText(null,"Saved",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        }
+
 }

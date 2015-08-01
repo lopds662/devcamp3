@@ -49,4 +49,7 @@ public interface Api {
     @GET("/profile/save_post")
     void archievementSaved(@Query("profile_id") String profileId, Callback<List<ArchivementFeedItem>> cb);
 
+    @POST("/profile/save_post")
+    void saveArchievement(@Query("profile_id") String profileId,@Query("id") String id,Callback<AchievementItem> cb );
+
 }
