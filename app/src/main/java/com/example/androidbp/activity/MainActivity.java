@@ -77,7 +77,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        new myLocationOverlay();
+        myLocationOverlay overlay =  new myLocationOverlay();
+
         //Inject view id to above properties
         ButterKnife.bind(this);
 
@@ -301,7 +302,7 @@ public class MainActivity extends AppCompatActivity
             double longitude = mLastLocation.getLongitude();
             LatLng latLng = new LatLng(latitude, longitude);
 
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 10);
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 20);
             googleMap.animateCamera(cameraUpdate);
 
             startLocationUpdates();
