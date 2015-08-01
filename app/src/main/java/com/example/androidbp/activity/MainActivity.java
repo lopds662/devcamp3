@@ -42,6 +42,7 @@ import com.squareup.otto.Subscribe;
 import java.io.IOException;
 import java.text.BreakIterator;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -67,6 +68,8 @@ public class MainActivity extends AppCompatActivity
     protected LocationRequest mLocationRequest;
     protected LocationManager locationManager;
     protected LatLng myPosition;
+
+    private HashMap<String, ArchivementFeedItem> markerData = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,7 +153,8 @@ public class MainActivity extends AppCompatActivity
             public boolean onMarkerClick(Marker marker) {
                 Intent i = new Intent(getApplicationContext(), AchievementPage.class);
                 // get the post's id & profile's id ???????
-                i.putExtra("id", "");
+                ArchivementFeedItem item = markerData.get(marker.getId());
+                i.putExtra("id", item.id);
                 i.putExtra("profile_id", "");
                 startActivity(i);
                 return true;
@@ -365,13 +369,15 @@ public class MainActivity extends AppCompatActivity
                 googleMap.clear();
                 for(ArchivementFeedItem item : archivementFeedItems) {
                     LatLng latLng = new LatLng(item.latitude, item.longitude);
-                    googleMap.addMarker(new MarkerOptions().position(latLng).title(item.title));
+                    Marker marker = googleMap.addMarker(new MarkerOptions().position(latLng).title(item.title));
+                    markerData.put(marker.getId(), item);
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Log.e("GGG", "Failed to get nearby location due to: " + error.getMessage());
+                error.printStackTrace();
             }
         });
     }
