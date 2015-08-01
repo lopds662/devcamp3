@@ -34,6 +34,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -376,7 +377,20 @@ public class MainActivity extends AppCompatActivity
                 googleMap.clear();
                 for (ArchivementFeedItem item : archivementFeedItems) {
                     LatLng latLng = new LatLng(item.latitude, item.longitude);
-                    Marker marker = googleMap.addMarker(new MarkerOptions().position(latLng).title(item.title));
+//                    Marker marker = googleMap.addMarker(new MarkerOptions().position(latLng).title(item.title));
+                    MarkerOptions m = new MarkerOptions();
+                    m.position(latLng);
+                    m.title(item.title);
+                    float color = BitmapDescriptorFactory.HUE_ORANGE;
+                    if (item.succeeded) {
+                        color = BitmapDescriptorFactory.HUE_GREEN;
+                    }
+                    else if (item.saved) {
+                        color = BitmapDescriptorFactory.HUE_BLUE;
+                    }
+                    m.icon(BitmapDescriptorFactory.defaultMarker(color));
+
+                    Marker marker = googleMap.addMarker(m);
                     markerData.put(marker.getId(), item);
                 }
             }
