@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -45,6 +46,12 @@ public class AchievementPage extends ActionBarActivity {
     public TextView textView_cr;
 
 
+    public static String id;
+    public static String profileId;
+    public static float lat;
+    public static float lng;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,14 +59,18 @@ public class AchievementPage extends ActionBarActivity {
 
         ButterKnife.bind(this);
 
-        String id = "";
-        String profileId = "0a776aa7-6073-4998-8802-b4ee79ff5d2a";
+        id = "";
+        profileId = "0a776aa7-6073-4998-8802-b4ee79ff5d2a";
+        lat = 0.0f;
+        lng = 0.0f;
 
         // get id's from MainActivity
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             id = extras.getString("id");
 //            profileId = extras.getString("profile_id");
+            lat = extras.getFloat("lat");
+            lng = extras.getFloat("lng");
         }
 
         Log.d("GGG", "Getting Achievement for id:" + id + " and for profile id:" + profileId);
@@ -72,8 +83,7 @@ public class AchievementPage extends ActionBarActivity {
             @Override
             public void success(AchievementItem achievementItem, Response response) {
                 Log.d("GGG", "Detail Success:" + String.valueOf(achievementItem));
-                // conver
-                // ]t url to bitmap
+                // convert url to bitmap
                 // ac = achievementItem.image_url
                 // cr = achievementItem.creator.avatar_image_url
 //                imageView_ac.setImageBitmap(null);
@@ -97,6 +107,13 @@ public class AchievementPage extends ActionBarActivity {
                     completeButton.setText("Completed");
                     completeButton.setEnabled(false);
                 }
+
+                completeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        completeAchievement(v);
+                    }
+                });
             }
 
             @Override
@@ -130,6 +147,7 @@ public class AchievementPage extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     private void onClickSave() {
         TextView textView = (TextView) findViewById(R.id.textAddAchievement);
         String text = textView.getText().toString();
@@ -138,13 +156,38 @@ public class AchievementPage extends ActionBarActivity {
         HttpManager.ApiFor(Api.class).saveArchievement(profileId,id, new Callback<AchievementItem>() {
             @Override
             public void success(AchievementItem achievementItem, Response response) {
-                Toast.makeText(null,"Saved",Toast.LENGTH_SHORT).show();
+                Toast.makeText(null, "Saved", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void failure(RetrofitError error) {
 
             }
+        });
+
+    }
+
+    public void completeAchievement(View view) {
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            lat = extras.getFloat("lat");
+            lng = extras.getFloat("lng");
         }
 
+        HttpManager.ApiFor(Api.class).completeArchievement(profileId, id, lat, lng, new Callback<Object>() {
+            @Override
+            public void success(Object obj, Response response) {
+                Log.d("GGG", "Loaded" + String.valueOf(obj));
+                Toast.makeText(null, "Successfully completing Achievement", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("GGG", "Error" + error.getMessage());
+                Toast.makeText(null, "Error completing Achievement", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 }
+
