@@ -41,8 +41,10 @@ public class CompleteAchievementActivity extends ActionBarActivity {
         final CustomArrayAdapter achieAdapter = new CustomArrayAdapter();
         listView.setLayoutManager(new LinearLayoutManager(this));
         listView.setAdapter(achieAdapter);
+        String profileId = "0a776aa7-6073-4998-8802-b4ee79ff5d2a";
 
-        HttpManager.ApiFor(Api.class).archivementFeed(new Callback<List<ArchivementFeedItem>>() {
+//        HttpManager.ApiFor(Api.class).archivementFeed(new Callback<List<ArchivementFeedItem>>() {
+        HttpManager.ApiFor(Api.class).archivementComplete(profileId, new Callback<List<ArchivementFeedItem>>() {
             @Override
             public void success(List<ArchivementFeedItem> archivementFeedItems, Response response) {
                 Log.d("GGG", "Loaded" + String.valueOf(archivementFeedItems));

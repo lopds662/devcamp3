@@ -16,6 +16,7 @@ import retrofit.http.Multipart;
 import retrofit.http.POST;
 import retrofit.http.Part;
 import retrofit.http.Path;
+import retrofit.http.Query;
 import retrofit.http.QueryMap;
 import retrofit.mime.TypedFile;
 
@@ -30,7 +31,7 @@ public interface Api {
     void archivementFeed(Callback<List<ArchivementFeedItem>> cb);
 
     @POST("/post/add_post")
-    void createNewAchievement(@Body CreateAchievementBody body, Callback<AchievementItem> cb);
+    void createNewAchievement(@Query("profile_id") String profileId, @Body CreateAchievementBody body, Callback<AchievementItem> cb);
 
     @POST("/image/upload")
     @Multipart
@@ -41,4 +42,7 @@ public interface Api {
 
     @GET("/post/nearby")
     void archievementNearby(@QueryMap Map<String, Float> m, Callback<List<ArchivementFeedItem>> cb);
+
+    @GET("/profile/complete_post")
+    void archivementComplete(@Query("profile_id") String profileId, Callback<List<ArchivementFeedItem>> cb);
 }

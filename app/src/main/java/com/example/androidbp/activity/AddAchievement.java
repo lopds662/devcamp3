@@ -259,7 +259,8 @@ public class AddAchievement extends ActionBarActivity {
         body.latitude = (float)latitude;
         body.longitude = (float)longitude;
         body.image_id = imageId;
-        HttpManager.ApiFor(Api.class).createNewAchievement(body, new Callback<AchievementItem>() {
+        String profileId = "37c6f4fa-c175-4410-8679-7964293412b6"; //TODO: change to current profile id
+        HttpManager.ApiFor(Api.class).createNewAchievement(profileId, body, new Callback<AchievementItem>() {
             @Override
             public void success(AchievementItem achievementItem, Response response) {
                 Log.d("GGG", String.valueOf(achievementItem));

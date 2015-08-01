@@ -2,6 +2,7 @@ package com.example.androidbp.activity;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,8 @@ import com.example.androidbp.manager.HttpManager;
 import java.util.HashMap;
 import java.util.Map;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -27,10 +30,26 @@ import retrofit.mime.TypedFile;
 
 public class AchievementPage extends ActionBarActivity {
 
+    @Bind(R.id.imageView_achievement)
+    public ImageView imageView_ac;
+
+    @Bind(R.id.imageView_creator)
+    public ImageView imageView_cr;
+
+    @Bind(R.id.textView_achievement)
+    public TextView textView_ac;
+
+    @Bind(R.id.textView_creator)
+    public TextView textView_cr;
+
+    public String idPost;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_achievement_page);
+
+        ButterKnife.bind(this);
 
         String id = "";
         String profile_id = "";
@@ -49,18 +68,17 @@ public class AchievementPage extends ActionBarActivity {
             @Override
             public void success(AchievementItem achievementItem, Response response) {
                 Log.d("GGG", String.valueOf(achievementItem));
-                ImageView imageView_ac = (ImageView) findViewById(R.id.imageView_achievement);
-                ImageView imageView_cr = (ImageView) findViewById(R.id.imageView_creator);
                 // convert url to bitmap
                 // ac = achievementItem.image_url
                 // cr = achievementItem.creator.avatar_image_url
                 imageView_ac.setImageBitmap(null);
                 imageView_cr.setImageBitmap(null);
 
-                TextView textView_ac = (TextView) findViewById(R.id.textView_achievement);
-                TextView textView_cr = (TextView) findViewById(R.id.textView_creator);
+//                TextView textView_ac = (TextView) findViewById(R.id.textView_achievement);
+//                TextView textView_cr = (TextView) findViewById(R.id.textView_creator);
                 textView_ac.setText(achievementItem.title);
                 textView_cr.setText(achievementItem.creator.name);
+
 
                 Button completeButton = (Button) findViewById(R.id.completeButton);
 
