@@ -44,6 +44,11 @@ public class AchievementPage extends ActionBarActivity {
     @Bind(R.id.textView_creator)
     public TextView textView_cr;
 
+    public static String id;
+    public static String profileId;
+    public static float lat;
+    public static float lng;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,14 +56,18 @@ public class AchievementPage extends ActionBarActivity {
 
         ButterKnife.bind(this);
 
-        String id = "";
-        String profileId = "0a776aa7-6073-4998-8802-b4ee79ff5d2a";
+        id = "";
+        profileId = "0a776aa7-6073-4998-8802-b4ee79ff5d2a";
+        lat = 0.0f;
+        lng = 0.0f;
 
         // get id's from MainActivity
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             id = extras.getString("id");
 //            profileId = extras.getString("profile_id");
+            lat = extras.getFloat("lat");
+            lng = extras.getFloat("lng");
         }
 
         Log.d("GGG", "Getting Achievement for id:" + id + " and for profile id:" + profileId);
@@ -71,13 +80,12 @@ public class AchievementPage extends ActionBarActivity {
             @Override
             public void success(AchievementItem achievementItem, Response response) {
                 Log.d("GGG", "Detail Success:" + String.valueOf(achievementItem));
-                // conver
-                // ]t url to bitmap
+                // convert url to bitmap
                 // ac = achievementItem.image_url
                 // cr = achievementItem.creator.avatar_image_url
 //                imageView_ac.setImageBitmap(null);
                 Picasso.with(imageView_ac.getContext()).load(achievementItem.image_url).placeholder(R.drawable.ic_media_play).into(imageView_ac);
-                Log.d("CCC",achievementItem.image_url);
+                Log.d("CCC", achievementItem.image_url);
 //                imageView_cr.setImageBitmap(null);
                 Picasso.with(imageView_cr.getContext()).load(achievementItem.owner_profile.profile_image).placeholder(R.drawable.ic_media_play).into(imageView_cr);
 
@@ -100,7 +108,7 @@ public class AchievementPage extends ActionBarActivity {
                 completeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        completeAchievement(v);
                     }
                 });
             }
@@ -133,5 +141,28 @@ public class AchievementPage extends ActionBarActivity {
 //        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void completeAchievement(View view){
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            lat = extras.getFloat("lat");
+            lng = extras.getFloat("lng");
+        }
+
+        HttpManager.ApiFor(Api.class).completeArchievement(profileId, id, lat, lng, new Callback<Object>() {
+            @Override
+            public void success(Object obj, Response response) {
+                Log.d("GGG", "Loaded" + String.valueOf(obj));
+                Toast.makeText(null, "Successfully completing Achievement", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d("GGG", "Error" + error.getMessage());
+                Toast.makeText(null, "Error completing Achievement", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

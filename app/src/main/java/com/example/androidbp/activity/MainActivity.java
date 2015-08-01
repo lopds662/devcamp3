@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity
                 Intent i = new Intent(getApplicationContext(), AchievementPage.class);
                 // get the post's id & profile's id ???????
                 i.putExtra("id", "");
-                i.putExtra("profile_id", "");
+//                i.putExtra("profile_id", "");
                 startActivity(i);
                 return true;
             }
