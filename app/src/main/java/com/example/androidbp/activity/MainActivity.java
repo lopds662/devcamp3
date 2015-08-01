@@ -104,6 +104,8 @@ public class MainActivity extends AppCompatActivity
         // Enabling MyLocation Layer of Google Map
         googleMap.setMyLocationEnabled(true);
 
+        googleMap.getUiSettings().setMapToolbarEnabled(false);
+
         // Getting LocationManager object from System Service LOCATION_SERVICE
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
