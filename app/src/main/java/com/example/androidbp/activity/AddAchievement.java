@@ -50,6 +50,7 @@ public class AddAchievement extends ActionBarActivity {
     public static final int PICTURE_REQUEST_CODE = 200;
     double latitude = 0;
     double longitude = 0;
+    public String addressText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,7 @@ public class AddAchievement extends ActionBarActivity {
         }
 
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-        String addressText = "";
+        addressText = "";
         try {
             List<Address> listA = geocoder.getFromLocation(latitude, longitude, 1);
             ArrayList<String> addressGet = new ArrayList<>();

@@ -41,7 +41,8 @@
             android:layout_alignBottom="@+id/imageView_creator"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:text="Owner name" />
+            android:text="KlangTangTeam"
+            android:visibility="visible" />
     </RelativeLayout>
 
     <Button

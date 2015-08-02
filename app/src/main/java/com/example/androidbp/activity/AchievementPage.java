@@ -1,6 +1,7 @@
 package com.example.androidbp.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -98,6 +99,11 @@ public class AchievementPage extends ActionBarActivity {
                 textView_cr.setText(achievementItem.owner_profile.name);
 //                Log.d("GGG", "succ");
 
+                TextView textView1 = (TextView) findViewById(R.id.textView_creator);
+                textView1.setText("@กางทาง");
+
+                ImageView imageView1 = (ImageView) findViewById(R.id.imageView_creator);
+                imageView1.setImageResource(R.mipmap.ic_launcher);
 
                 Button completeButton = (Button) findViewById(R.id.completeButton);
 

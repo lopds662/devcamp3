@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity
 
         //Show icon on actionbar
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
+        getSupportActionBar().setIcon(R.drawable.mapsicon48);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Drive.API)
@@ -431,7 +431,7 @@ public class MainActivity extends AppCompatActivity
         // This a sample dat to fill our ListView
         // find pic, name, last name to be correctly put
         ArrayList<DataItem> personItem = new ArrayList<DataItem>();
-        personItem.add(new DataItem(R.drawable.ic_add_white_24dp, "กางทาง", "@DevCamp#3"));
+        personItem.add(new DataItem(R.drawable.blank36, "กางทาง", "@DevCamp#3"));
         personItem.add(new DataItem(0, com_arc, ""));
         personItem.add(new DataItem(0, sav_arc, ""));
         personItem.add(new DataItem(0, log_out, ""));
